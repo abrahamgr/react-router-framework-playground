@@ -9,5 +9,5 @@ export async function loader({ params: { id } }: LoaderFunctionArgs) {
 
 export default function CharacterPage() {
   const character = useLoaderData<typeof loader>()
-  return <CharacterComponent character={character} />
+  return <CharacterComponent character={character} isFavorite />
 }
