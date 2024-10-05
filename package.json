@@ -8,6 +8,7 @@
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "lint:fix": "npm run lint --fix",
+    "lint:oxc": "oxlint",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
     "prepare": "husky || true"
@@ -36,6 +37,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
+    "oxlint": "^0.9.9",
     "postcss": "^8.4.38",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
@@ -48,7 +50,10 @@
     "node": ">=20.0.0"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix",
+    "*.{ts,tsx}": [
+      "oxlint --fix --fix-suggestions",
+      "eslint --fix"
+    ],
     "*.{css,js,jsx,md,yml,json}": "prettier -w"
   }
 }
