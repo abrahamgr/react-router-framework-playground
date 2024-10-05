@@ -1,31 +1,27 @@
-import { Link, useRevalidator } from '@remix-run/react'
+import { Link } from '@remix-run/react'
 import { type FC } from 'react'
 import type { Character } from '~/types/rick-morty'
 import starIcon from '~/icons/star.svg'
 import starFilledIcon from '~/icons/star-filled.svg'
-import { setFavorite } from '~/services/favorites'
+import { useFavorite } from '~/hooks/useFavorite'
 
 export interface CharacterProps {
   character: Character
   isFavorite: boolean
 }
 
-export const CharacterComponent: FC<CharacterProps> = ({
+export const CharacterItem: FC<CharacterProps> = ({
   character: { id, name, status, image, gender, species, location },
   isFavorite,
 }) => {
-  const revalidator = useRevalidator()
-  const handleFavorite = async (characterId: number) => {
-    await setFavorite(characterId)
-    revalidator.revalidate()
-  }
+  const { handleFavorite } = useFavorite(id)
   return (
     <div className='flex w-[350px] rounded-md border-2 border-slate-300'>
       <img src={image} alt={name} className='w-40 rounded-l-sm' />
       <div className='flex w-full flex-col p-3'>
         <button
           className='cursor-pointer self-end'
-          onClick={() => handleFavorite(id)}
+          onClick={handleFavorite}
         >
           <img src={isFavorite ? starFilledIcon : starIcon} alt='favorite' />
         </button>
