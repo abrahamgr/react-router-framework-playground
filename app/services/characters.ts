@@ -17,3 +17,17 @@ export async function getCharacter(id: string): Promise<Character> {
     throw new Error('Error getting character', { cause: response })
   return await response.json()
 }
+
+export async function getMultipleCharacters(
+  ids: string[]
+): Promise<Character[]> {
+  // return empty value
+  if (!Array.isArray(ids) || ids.length === 0) return []
+  const response = await fetch(
+    // setting as [ids] always will return an array
+    new URL(`/api/character/[${ids.join(',')}]`, apiBase)
+  )
+  if (!response.ok)
+    throw new Error('Error getting character', { cause: response })
+  return await response.json()
+}
