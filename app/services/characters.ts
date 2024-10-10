@@ -1,6 +1,5 @@
+import { apiBase } from '~/const/config'
 import type { Character, Info } from '~/types/rick-morty'
-
-const apiBase = 'https://rickandmortyapi.com'
 
 export async function getCharacters(page?: string): Promise<Info<Character[]>> {
   const pageParam = page ? '?page=' + page : ''

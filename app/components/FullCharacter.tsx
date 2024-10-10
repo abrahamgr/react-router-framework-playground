@@ -3,9 +3,16 @@ import starIcon from '~/icons/star.svg'
 import starFilledIcon from '~/icons/star-filled.svg'
 import { CharacterProps } from '~/components/CharacterItem'
 import { useFavorite } from '~/hooks/useFavorite'
+import { EpisodeList } from '~/components/EpisodeList'
+import { Episode } from '~/types/rick-morty'
 
-export const FullCharacter: FC<CharacterProps> = ({
+interface FullCharacterProps extends CharacterProps {
+  episodes: Episode[]
+}
+
+export const FullCharacter: FC<FullCharacterProps> = ({
   character: { id, name, status, image, gender, species, location },
+  episodes,
   isFavorite,
 }) => {
   const { handleFavorite } = useFavorite(id)
@@ -28,6 +35,9 @@ export const FullCharacter: FC<CharacterProps> = ({
           <p className='text-sm'>{`${species} - ${gender}`}</p>
           <p className='text-sm'>{location.name}</p>
         </div>
+        {episodes ? <section>
+          <EpisodeList episodes={episodes} />
+        </section> : null}
       </div>
     </div>
   )
