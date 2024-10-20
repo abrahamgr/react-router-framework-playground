@@ -5,3 +5,9 @@ export const cookieFavorite = createCookie('favorites', {
   secure: true,
   sameSite: 'strict',
 })
+
+export const cookieToken = createCookie('token', {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'strict',
+})
