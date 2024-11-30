@@ -7,7 +7,6 @@ import {
 } from '@remix-run/react'
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'
-import { Menu } from '~/components/Menu'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,7 +18,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <LayoutComponent>
-        <Menu />
         {children}
         <ScrollRestoration />
         <Scripts />
