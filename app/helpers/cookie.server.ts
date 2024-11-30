@@ -1,13 +1,11 @@
-import { createCookie } from '@remix-run/node'
+import { type CookieOptions, createCookie } from '@remix-run/node'
 
-export const cookieFavorite = createCookie('favorites', {
+const baseCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: true,
+  secure: process.env.NODE_ENV === 'production',
   sameSite: 'strict',
-})
+}
 
-export const cookieToken = createCookie('token', {
-  httpOnly: true,
-  secure: true,
-  sameSite: 'strict',
-})
+export const cookieFavorite = createCookie('favorites', baseCookieOptions)
+
+export const cookieToken = createCookie('token', baseCookieOptions)

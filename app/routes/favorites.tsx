@@ -1,4 +1,4 @@
-import { json, type LoaderFunction, type MetaFunction } from '@remix-run/node'
+import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { CharacterList } from '~/components/CharacterList'
 import { cookieFavorite } from '~/helpers/cookie.server'
@@ -10,19 +10,19 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   // get cookies
-  const favoriteIds: string[] = await cookieFavorite.parse(
+  const favoriteIds: number[] = await cookieFavorite.parse(
     request.headers.get('Cookie')
   )
   // get data from API
   const favorites = await getMultipleCharacters(favoriteIds)
 
-  return json({
+  return {
     favorites: favorites,
     favoriteIds,
-  })
+  }
 }
 
 export default function Index() {

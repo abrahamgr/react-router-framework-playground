@@ -6,7 +6,12 @@
 
 import { PassThrough } from 'node:stream'
 
-import type { AppLoadContext, EntryContext } from '@remix-run/node'
+import type {
+  // ActionFunctionArgs,
+  AppLoadContext,
+  EntryContext,
+  // LoaderFunctionArgs
+} from '@remix-run/node'
 import { createReadableStreamFromReadable } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
 import { isbot } from 'isbot'
@@ -26,17 +31,17 @@ export default function handleRequest(
 ) {
   return isbot(request.headers.get('user-agent') || '')
     ? handleBotRequest(
-        request,
-        responseStatusCode,
-        responseHeaders,
-        remixContext
-      )
+      request,
+      responseStatusCode,
+      responseHeaders,
+      remixContext
+    )
     : handleBrowserRequest(
-        request,
-        responseStatusCode,
-        responseHeaders,
-        remixContext
-      )
+      request,
+      responseStatusCode,
+      responseHeaders,
+      remixContext
+    )
 }
 
 function handleBotRequest(
@@ -138,3 +143,18 @@ function handleBrowserRequest(
     setTimeout(abort, ABORT_DELAY)
   })
 }
+
+// export function handleDataRequest(
+//   response: Response,
+//   {
+//     request,
+//     params,
+//     context,
+//   }: LoaderFunctionArgs | ActionFunctionArgs
+// ) {
+//   console.log('url', request.url)
+//   console.log('params', params)
+//   console.log('context', context)
+//   response.headers.set("X-Custom-Header", "value");
+//   return response;
+// }

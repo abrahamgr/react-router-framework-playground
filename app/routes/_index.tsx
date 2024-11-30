@@ -1,4 +1,4 @@
-import { json, type LoaderFunction, type MetaFunction } from '@remix-run/node'
+import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useLoaderData, useSearchParams } from '@remix-run/react'
 import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { searchParams } = new URL(request.url)
 
   // get data from API
@@ -22,10 +22,10 @@ export const loader: LoaderFunction = async ({ request }) => {
     request.headers.get('Cookie')
   )
 
-  return json({
+  return {
     ...data,
     favorites: favoritesValue ?? [],
-  })
+  }
 }
 
 export default function Index() {

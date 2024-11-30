@@ -9,5 +9,5 @@ export async function setCookieFavorite(id: number, cookie: string) {
   if (favoriteIndex > -1) favorites.splice(favoriteIndex, 1)
   else favorites.push(id)
 
-  return await cookieFavorite.serialize(favorites)
+  return cookieFavorite.serialize(favorites)
 }

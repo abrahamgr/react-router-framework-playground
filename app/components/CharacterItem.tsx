@@ -3,6 +3,7 @@ import { type FC } from 'react'
 import type { Character } from '~/types/rick-morty'
 import starIcon from '~/icons/star.svg'
 import starFilledIcon from '~/icons/star-filled.svg'
+import { internalEndpoints } from '~/const/endpoints'
 
 export interface CharacterProps {
   character: Character
@@ -21,7 +22,7 @@ export const CharacterItem: FC<CharacterProps> = ({
     <div className='flex w-[350px] rounded-md border-2 border-slate-300'>
       <img src={image} alt={name} className='w-40 rounded-l-sm' />
       <div className='flex w-full flex-col p-3'>
-        <fetcher.Form method='POST' action='/api/favorites'>
+        <fetcher.Form method='POST' action={internalEndpoints.favorites}>
           <button
             className='cursor-pointer self-end'
             name='characterId'

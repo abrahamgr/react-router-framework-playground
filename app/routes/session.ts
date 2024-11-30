@@ -1,9 +1,9 @@
-import { ActionFunction, json, LoaderFunction, redirect } from '@remix-run/node'
+import { ActionFunction, LoaderFunction, redirect } from '@remix-run/node'
 import { cookieToken } from '~/helpers/cookie.server'
 
 export const action: ActionFunction = async ({ request }) => {
   console.log('/session', request.method)
-  return json(null)
+  return Response.json(null)
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

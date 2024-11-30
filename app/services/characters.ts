@@ -18,7 +18,7 @@ export async function getCharacter(id: string): Promise<Character> {
 }
 
 export async function getMultipleCharacters(
-  ids: string[]
+  ids: number[]
 ): Promise<Character[]> {
   // return empty value
   if (!Array.isArray(ids) || ids.length === 0) return []

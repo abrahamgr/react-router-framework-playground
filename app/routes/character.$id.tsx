@@ -1,9 +1,15 @@
-import { LoaderFunctionArgs } from '@remix-run/node'
+import { LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { FullCharacter } from '~/components/FullCharacter'
 import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacter } from '~/services/characters'
 import { getMultipleEpisodes } from '~/services/episodes'
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [
+    { title: `Rick & Morty - ${data?.character.name}` },
+  ]
+}
 
 export async function loader({ params: { id }, request }: LoaderFunctionArgs) {
   if (!id)
