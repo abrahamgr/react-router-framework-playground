@@ -5,13 +5,10 @@ import { cookieFavorite } from '~/helpers/cookie.server'
 import { getMultipleCharacters } from '~/services/characters'
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: 'Rick & Morty - Favorites' },
-  ]
+  return [{ title: 'Rick & Morty - Favorites' }]
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-
   // get cookies
   const favoriteIds: number[] = await cookieFavorite.parse(
     request.headers.get('Cookie')

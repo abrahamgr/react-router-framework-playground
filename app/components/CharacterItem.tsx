@@ -16,10 +16,10 @@ export const CharacterItem: FC<CharacterProps> = ({
 }) => {
   const fetcher = useFetcher()
   const isFavoriteOptimistic = fetcher.formData
-    ? fetcher.formData.get("characterId")
+    ? fetcher.formData.get('characterId')
     : isFavorite
   return (
-    <div className='flex md:w-[350px] w-full rounded-md border-2 border-slate-300'>
+    <div className='flex w-full rounded-md border-2 border-slate-300 md:w-[350px]'>
       <img src={image} alt={name} className='w-40 rounded-l-sm' />
       <div className='flex w-full flex-col p-3'>
         <fetcher.Form method='POST' action={internalEndpoints.favorites}>
@@ -28,7 +28,10 @@ export const CharacterItem: FC<CharacterProps> = ({
             name='characterId'
             value={id}
           >
-            <img src={isFavoriteOptimistic ? starFilledIcon : starIcon} alt='favorite' />
+            <img
+              src={isFavoriteOptimistic ? starFilledIcon : starIcon}
+              alt='favorite'
+            />
           </button>
         </fetcher.Form>
         <Link to={`/character/${id}`} className='hover:underline'>

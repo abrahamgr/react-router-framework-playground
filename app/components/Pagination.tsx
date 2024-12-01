@@ -16,8 +16,7 @@ export function Pagination({ currentPage, lastPage, path }: PaginationProps) {
   const getQueryparams = (pageNumber: number) => {
     const params = new URLSearchParams({ page: `${pageNumber}` })
     // keep current query if provided
-    if (query)
-      params.append('q', query)
+    if (query) params.append('q', query)
     return `${path}?${params.toString()}`
   }
 
@@ -27,8 +26,7 @@ export function Pagination({ currentPage, lastPage, path }: PaginationProps) {
   }
   const onNext = () => {
     const pageNumber = Number(currentPage)
-    if (pageNumber > 0)
-      navigate(getQueryparams(pageNumber + 1))
+    if (pageNumber > 0) navigate(getQueryparams(pageNumber + 1))
   }
   return (
     <div className='flex w-[200px] justify-between'>
@@ -36,7 +34,11 @@ export function Pagination({ currentPage, lastPage, path }: PaginationProps) {
         Prev
       </Button>
       <span className='flex items-center'>{currentPage}</span>
-      <Button type='button' disabled={currentPage === lastPage} onClick={onNext}>
+      <Button
+        type='button'
+        disabled={currentPage === lastPage}
+        onClick={onNext}
+      >
         Next
       </Button>
     </div>

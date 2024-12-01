@@ -28,8 +28,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     },
     results: [],
   }
-  if (name)
-    data = await getCharacters({ name, page })
+  if (name) data = await getCharacters({ name, page })
   // get cookies
   const favoritesValue: number[] = await cookieFavorite.parse(
     request.headers.get('Cookie')
@@ -45,8 +44,8 @@ export default function Search() {
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q')
   const { results, info, favorites } = useLoaderData<typeof loader>()
-  const component = query ?
-    (results?.length ?
+  const component = query ? (
+    results?.length ? (
       <>
         <CharacterList characters={results!} favorites={favorites} />
         <Pagination
@@ -54,14 +53,15 @@ export default function Search() {
           lastPage={`${info?.pages}`}
           path={'/search'}
         />
-      </> :
-      <p>No characters found</p>) :
+      </>
+    ) : (
+      <p>No characters found</p>
+    )
+  ) : (
     <p>Search a character</p>
-
+  )
 
   return (
-    <div className='flex flex-col items-center p-4 font-sans'>
-      {component}
-    </div>
+    <div className='flex flex-col items-center p-4 font-sans'>{component}</div>
   )
 }

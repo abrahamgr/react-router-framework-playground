@@ -1,6 +1,6 @@
-import { useSearchParams, useNavigate } from "@remix-run/react"
-import { FormEvent } from "react"
-import { Input } from "~/components/atoms/Input"
+import { useSearchParams, useNavigate } from '@remix-run/react'
+import { FormEvent } from 'react'
+import { Input } from '~/components/atoms/Input'
 
 export function SearchBar() {
   const navigate = useNavigate()
@@ -11,18 +11,18 @@ export function SearchBar() {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const query = formData.get('q')
-    if (query)
-      navigate(`/search?q=${query}`)
+    if (query) navigate(`/search?q=${query}`)
   }
 
   return (
-    <form className='w-[80%] mx-5' onSubmit={handleSubmit}>
+    <form className='mx-5 w-[80%]' onSubmit={handleSubmit}>
       <Input
         type='text'
         name='q'
         placeholder='find a character'
-        className='w-full border-slate-300 hover:border-slate-400 border-[1px]'
+        className='w-full border-[1px] border-slate-300 hover:border-slate-400'
         defaultValue={query ?? ''}
       />
-    </form>)
+    </form>
+  )
 }

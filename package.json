@@ -52,7 +52,8 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "oxlint --fix --fix-suggestions",
-      "eslint --fix"
+      "eslint --fix",
+      "prettier -w"
     ],
     "*.{css,js,jsx,md,yml,json}": "prettier -w"
   }

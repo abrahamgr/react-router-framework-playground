@@ -6,9 +6,9 @@ import { Loading } from './Loading'
 export const LayoutComponent: FC<PropsWithChildren> = ({ children }) => {
   const navigation = useNavigation()
   return (
-    <body className='flex flex-col w-full'>
+    <body className='flex w-full flex-col'>
       <Menu />
-      <main className='self-center max-w-screen-2xl md:max-w-screen-xl'>
+      <main className='max-w-screen-2xl self-center md:max-w-screen-xl'>
         {navigation.state === 'loading' ? <Loading /> : children}
       </main>
     </body>

@@ -6,17 +6,15 @@ import { getCharacter } from '~/services/characters'
 import { getMultipleEpisodes } from '~/services/episodes'
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return [
-    { title: `Rick & Morty - ${data?.character.name}` },
-  ]
+  return [{ title: `Rick & Morty - ${data?.character.name}` }]
 }
 
 export async function loader({ params: { id }, request }: LoaderFunctionArgs) {
-  if (!id)
-    throw new Error('Parameter required')
+  if (!id) throw new Error('Parameter required')
   const character = await getCharacter(id!)
-  const favorites: number[] = await cookieFavorite.parse(request.headers.get('Cookie')) ?? []
-  const episodeIds = character.episode.map(item => {
+  const favorites: number[] =
+    (await cookieFavorite.parse(request.headers.get('Cookie'))) ?? []
+  const episodeIds = character.episode.map((item) => {
     const index = item.lastIndexOf('/')
     return item.slice(index + 1)
   })
@@ -25,11 +23,17 @@ export async function loader({ params: { id }, request }: LoaderFunctionArgs) {
   return {
     character,
     episodes,
-    isFavorite
+    isFavorite,
   }
 }
 
 export default function CharacterPage() {
   const { character, isFavorite, episodes } = useLoaderData<typeof loader>()
-  return <FullCharacter character={character} episodes={episodes} isFavorite={isFavorite} />
+  return (
+    <FullCharacter
+      character={character}
+      episodes={episodes}
+      isFavorite={isFavorite}
+    />
+  )
 }
