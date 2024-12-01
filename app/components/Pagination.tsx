@@ -32,11 +32,11 @@ export function Pagination({ currentPage, lastPage, path }: PaginationProps) {
   }
   return (
     <div className='flex w-[200px] justify-between'>
-      <Button disabled={currentPage === '1'} onClick={onPrev}>
+      <Button type='button' disabled={currentPage === '1'} onClick={onPrev}>
         Prev
       </Button>
       <span className='flex items-center'>{currentPage}</span>
-      <Button disabled={currentPage === lastPage} onClick={onNext}>
+      <Button type='button' disabled={currentPage === lastPage} onClick={onNext}>
         Next
       </Button>
     </div>

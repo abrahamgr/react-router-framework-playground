@@ -19,7 +19,7 @@ export const CharacterItem: FC<CharacterProps> = ({
     ? fetcher.formData.get("characterId")
     : isFavorite
   return (
-    <div className='flex w-[350px] rounded-md border-2 border-slate-300'>
+    <div className='flex md:w-[350px] w-full rounded-md border-2 border-slate-300'>
       <img src={image} alt={name} className='w-40 rounded-l-sm' />
       <div className='flex w-full flex-col p-3'>
         <fetcher.Form method='POST' action={internalEndpoints.favorites}>
