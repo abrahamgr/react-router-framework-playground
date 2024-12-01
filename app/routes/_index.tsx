@@ -16,7 +16,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { searchParams } = new URL(request.url)
 
   // get data from API
-  const data = await getCharacters(searchParams.get('page') ?? undefined)
+  const page = searchParams.get('page') ?? undefined
+  const data = await getCharacters(page ? { page } : undefined)
   // get cookies
   const favoritesValue: number[] = await cookieFavorite.parse(
     request.headers.get('Cookie')

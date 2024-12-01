@@ -1,13 +1,39 @@
 import { apiBase } from '~/const/config'
 import type { Character, Info } from '~/types/rick-morty'
 
-export async function getCharacters(page?: string): Promise<Info<Character[]>> {
-  const pageParam = page ? '?page=' + page : ''
-  const response = await fetch(new URL(`/api/character${pageParam}`, apiBase))
-  if (!response.ok)
-    throw new Error('Error getting characters', { cause: response })
-  const data: Info<Character[]> = await response.json()
-  return data
+// interface GetCharacterOptions {
+//   page?: string
+//   name?: string
+// }
+
+type GetCharacterOptions = Record<'page' | 'name', string>
+
+export async function getCharacters(
+  options: Partial<GetCharacterOptions> | undefined
+): Promise<Info<Character[]>> {
+  const query = options ? new URLSearchParams(options).toString() : ''
+  const response = await fetch(
+    new URL(`/api/character${query ? `?${query}` : ''}`, apiBase)
+  )
+
+  if (response.ok) {
+    const data: Info<Character[]> = await response.json()
+    return data
+  }
+
+  if (response.status === 404) {
+    console.log(`no data found for ${query}`)
+    return {
+      info: {
+        count: 0,
+        next: '',
+        pages: 0,
+        prev: '',
+      },
+      results: [],
+    }
+  }
+  throw new Error('Error getting characters', { cause: response })
 }
 
 export async function getCharacter(id: string): Promise<Character> {
