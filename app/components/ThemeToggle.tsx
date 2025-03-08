@@ -1,6 +1,6 @@
 import lightIcon from '~/icons/lightTheme.svg'
 import darkIcon from '~/icons/darkTheme.svg'
-import { useFetcher } from '@remix-run/react'
+import { useFetcher } from 'react-router'
 
 export function ThemeToggle() {
   const { Form } = useFetcher()

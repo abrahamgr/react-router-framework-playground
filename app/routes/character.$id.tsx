@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { LoaderFunctionArgs, type MetaFunction } from 'react-router'
+import { useLoaderData } from 'react-router'
 import { FullCharacter } from '~/components/FullCharacter'
 import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacter } from '~/services/characters'

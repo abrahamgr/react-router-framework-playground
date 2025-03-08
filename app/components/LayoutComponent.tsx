@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
-import { useNavigation } from '@remix-run/react'
+import { useNavigation } from 'react-router'
 import { Menu } from './Menu'
 import { Loading } from './Loading'
 

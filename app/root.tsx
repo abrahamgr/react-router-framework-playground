@@ -5,10 +5,10 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-} from '@remix-run/react'
+  LoaderFunctionArgs,
+} from 'react-router'
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'
-import { LoaderFunctionArgs } from '@remix-run/node'
 import { getThemeSession } from '~/helpers/session.server'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

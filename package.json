@@ -4,25 +4,26 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix vite:build",
-    "dev": "remix vite:dev",
+    "build": "react-router build",
+    "dev": "react-router dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "lint:fix": "npm run lint --fix",
     "lint:oxc": "oxlint",
-    "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
     "prepare": "husky || true"
   },
   "dependencies": {
-    "@remix-run/node": "^2.16.0",
-    "@remix-run/react": "^2.16.0",
-    "@remix-run/serve": "^2.16.0",
+    "@react-router/fs-routes": "^7.3.0",
+    "@react-router/node": "^7.3.0",
+    "@react-router/serve": "^7.3.0",
     "isbot": "^5.1.17",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router": "^7.3.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.16.0",
+    "@react-router/dev": "^7.3.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",

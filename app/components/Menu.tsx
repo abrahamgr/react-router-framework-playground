@@ -1,4 +1,4 @@
-import { NavLink } from '@remix-run/react'
+import { NavLink } from 'react-router'
 import logo from '~/icons/logo.svg'
 import logoDark from '~/icons/logoDark.svg'
 import { SearchBar } from './SearchBar'

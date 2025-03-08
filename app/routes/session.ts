@@ -1,4 +1,4 @@
-import { ActionFunction, LoaderFunction, redirect } from '@remix-run/node'
+import { ActionFunction, LoaderFunction, redirect } from 'react-router'
 import { cookieToken } from '~/helpers/cookie.server'
 
 export const action: ActionFunction = async ({ request }) => {

@@ -1,5 +1,9 @@
-import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
-import { useLoaderData, useSearchParams } from '@remix-run/react'
+import {
+  type LoaderFunctionArgs,
+  useLoaderData,
+  type MetaFunction,
+} from 'react-router'
+import { useSearchParams } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
 import { cookieFavorite } from '~/helpers/cookie.server'

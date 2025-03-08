@@ -1,9 +1,12 @@
-import { type CookieOptions, createCookie } from '@remix-run/node'
+import { type CookieOptions, createCookie } from 'react-router'
+
+const isProd = process.env.NODE_ENV === 'production'
 
 const baseCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
+  secure: isProd,
   sameSite: 'strict',
+  secrets: isProd ? ['my-key'] : undefined,
 }
 
 export const cookieFavorite = createCookie('favorites', baseCookieOptions)

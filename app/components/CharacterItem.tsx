@@ -1,4 +1,4 @@
-import { Link, useFetcher } from '@remix-run/react'
+import { Link, useFetcher } from 'react-router'
 import { type FC } from 'react'
 import type { Character } from '~/types/rick-morty'
 import starIcon from '~/icons/star.svg'

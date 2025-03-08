@@ -1,4 +1,4 @@
-import { type ActionFunction } from '@remix-run/node'
+import { type ActionFunction } from 'react-router'
 import { getThemeSession } from '~/helpers/session.server'
 
 export const action: ActionFunction = async ({ request }) => {

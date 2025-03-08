@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from '@remix-run/node' // or cloudflare/deno
+import { createCookieSessionStorage } from 'react-router' // or cloudflare/deno
 
 const THEME_KEY = 'theme'
 

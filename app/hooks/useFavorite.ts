@@ -1,4 +1,4 @@
-import { useRevalidator } from '@remix-run/react'
+import { useRevalidator } from 'react-router'
 import { setFavorite } from '~/services/favorites'
 
 export const useFavorite = (id: number) => {
