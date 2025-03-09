@@ -6,7 +6,7 @@ export function ThemeToggle() {
   const { Form } = useFetcher()
   return (
     <Form method='post' action='/api/theme'>
-      <button type='submit'>
+      <button type='submit' className='cursor-pointer'>
         <img src={darkIcon} alt='theme-toggle' className='dark:hidden' />
         <img src={lightIcon} alt='theme-toggle' className='hidden dark:flex' />
       </button>
