@@ -1,15 +1,14 @@
-import { LoaderFunctionArgs, type MetaFunction } from 'react-router'
-import { useLoaderData } from 'react-router'
 import { FullCharacter } from '~/components/FullCharacter'
 import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacter } from '~/services/characters'
 import { getMultipleEpisodes } from '~/services/episodes'
+import type { Route } from './+types/character.$id'
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: Route.MetaFunction = ({ data }) => {
   return [{ title: `Rick & Morty - ${data?.character.name}` }]
 }
 
-export async function loader({ params: { id }, request }: LoaderFunctionArgs) {
+export async function loader({ params: { id }, request }: Route.LoaderArgs) {
   if (!id) throw new Error('Parameter required')
   const character = await getCharacter(id!)
   const favorites: number[] =
@@ -27,8 +26,8 @@ export async function loader({ params: { id }, request }: LoaderFunctionArgs) {
   }
 }
 
-export default function CharacterPage() {
-  const { character, isFavorite, episodes } = useLoaderData<typeof loader>()
+export default function CharacterPage({ loaderData }: Route.ComponentProps) {
+  const { character, isFavorite, episodes } = loaderData
   return (
     <FullCharacter
       character={character}

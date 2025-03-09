@@ -4,12 +4,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
   LoaderFunctionArgs,
 } from 'react-router'
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'
 import { getThemeSession } from '~/helpers/session.server'
+import type { Route } from './+types/root'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   // theme session
@@ -21,8 +21,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
-  const { theme } = useLoaderData<typeof loader>()
+export default function App({ loaderData }: Route.ComponentProps) {
+  const { theme } = loaderData
   const themeClass = theme === 'dark' ? 'dark' : 'light'
   return (
     <html lang='en' className={themeClass}>
@@ -34,14 +34,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <LayoutComponent>
-        {children}
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
       </LayoutComponent>
     </html>
   )
-}
-
-export default function App() {
-  return <Outlet />
 }

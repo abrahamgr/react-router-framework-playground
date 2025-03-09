@@ -1,13 +1,10 @@
-import {
-  type LoaderFunctionArgs,
-  useLoaderData,
-  type MetaFunction,
-} from 'react-router'
+import { type LoaderFunctionArgs, type MetaFunction } from 'react-router'
 import { useSearchParams } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
 import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacters } from '~/services/characters'
+import type { Route } from './+types/_index'
 
 export const meta: MetaFunction = () => {
   return [
@@ -33,9 +30,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 }
 
-export default function Index() {
+export default function Index({ loaderData }: Route.ComponentProps) {
   const [searchParams] = useSearchParams()
-  const { results, info, favorites } = useLoaderData<typeof loader>()
+  const { results, info, favorites } = loaderData
 
   return (
     <div className='flex flex-col items-center p-4 font-sans'>

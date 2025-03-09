@@ -1,19 +1,19 @@
-import { type LoaderFunctionArgs, type MetaFunction } from 'react-router'
-import { useLoaderData, useSearchParams } from 'react-router'
+import { useSearchParams } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
 import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacters } from '~/services/characters'
 import type { Character, Info } from '~/types/rick-morty'
+import type { Route } from './+types/search'
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
   return [
     { title: 'Rick & Morty - Remix' },
     { name: 'Remix App', content: 'Welcome to Rick & Morty!' },
   ]
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { searchParams } = new URL(request.url)
 
   // filter from API
@@ -40,10 +40,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 }
 
-export default function Search() {
+export default function Search({ loaderData }: Route.ComponentProps) {
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q')
-  const { results, info, favorites } = useLoaderData<typeof loader>()
+  const { results, info, favorites } = loaderData
   const component = query ? (
     results?.length ? (
       <>

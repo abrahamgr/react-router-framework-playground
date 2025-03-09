@@ -1,14 +1,13 @@
-import { type LoaderFunctionArgs, type MetaFunction } from 'react-router'
-import { useLoaderData } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
 import { cookieFavorite } from '~/helpers/cookie.server'
 import { getMultipleCharacters } from '~/services/characters'
+import type { Route } from './+types/favorites'
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
   return [{ title: 'Rick & Morty - Favorites' }]
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   // get cookies
   const favoriteIds: number[] = await cookieFavorite.parse(
     request.headers.get('Cookie')
@@ -22,8 +21,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 }
 
-export default function Index() {
-  const { favorites, favoriteIds } = useLoaderData<typeof loader>()
+export default function Index({ loaderData }: Route.ComponentProps) {
+  const { favorites, favoriteIds } = loaderData
 
   return (
     <div className='flex flex-col items-center p-4 font-sans'>

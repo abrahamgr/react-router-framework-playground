@@ -6,7 +6,6 @@ const baseCookieOptions: CookieOptions = {
   httpOnly: true,
   secure: isProd,
   sameSite: 'strict',
-  secrets: isProd ? ['my-key'] : undefined,
 }
 
 export const cookieFavorite = createCookie('favorites', baseCookieOptions)
