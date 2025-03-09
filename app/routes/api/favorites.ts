@@ -1,12 +1,16 @@
 import { data, type ActionFunction } from 'react-router'
+import { pages } from '~/const/pages'
 import { setCookieFavorite } from '~/data/favorites.server'
+import { isValidAuthRequest } from '~/helpers/jwt.server'
 
 interface FavoriteRequest {
   characterId: number
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const badRequest = Response.json(null, { status: 400 })
+  const badRequest = data(null, { status: 400 })
+  const loginRequest = await isValidAuthRequest(request, pages.root)
+  if (loginRequest) return loginRequest
 
   // only POST allowed
   if (request.method !== 'POST') return badRequest

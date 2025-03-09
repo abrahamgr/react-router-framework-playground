@@ -11,3 +11,5 @@ const baseCookieOptions: CookieOptions = {
 export const cookieFavorite = createCookie('favorites', baseCookieOptions)
 
 export const cookieToken = createCookie('token', baseCookieOptions)
+
+export const jwtCookie = createCookie('jwt', baseCookieOptions)

@@ -5,11 +5,21 @@ import {
   Scripts,
   ScrollRestoration,
   LoaderFunctionArgs,
+  MetaFunction,
 } from 'react-router'
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'
 import { getThemeSession } from '~/helpers/session.server'
 import type { Route } from './+types/root'
+
+export const meta: MetaFunction = () => {
+  return [
+    {
+      title: 'Rick & Morty',
+      description: 'View charaters',
+    },
+  ]
+}
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   // theme session

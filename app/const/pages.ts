@@ -4,4 +4,5 @@ export const pages = {
   favorites: '/favorites',
   invalidSession: '/invalid-session',
   session: '/session',
+  login: '/login',
 } as const

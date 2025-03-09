@@ -1,12 +1,16 @@
-import { useRevalidator } from 'react-router'
+import { useNavigate, useRevalidator } from 'react-router'
+import { pages } from '~/const/pages'
 import { setFavorite } from '~/services/favorites'
 
 export const useFavorite = (id: number) => {
   const revalidator = useRevalidator()
+  const navigate = useNavigate()
 
   const handleFavorite = async () => {
-    await setFavorite(id)
-    revalidator.revalidate()
+    const response = await setFavorite(id)
+    if (response.type === 'opaqueredirect') {
+      navigate(pages.login)
+    } else revalidator.revalidate()
   }
 
   return {

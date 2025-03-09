@@ -5,6 +5,7 @@
  */
 
 import { PassThrough } from 'node:stream'
+import 'dotenv/config'
 
 import type {
   // ActionFunctionArgs,

@@ -9,6 +9,7 @@ export default [
   index('routes/index.tsx'),
   route('favorites', 'routes/favorites.tsx'),
   route('character/:id', 'routes/character.tsx'),
+  route('login', 'routes/login.tsx'),
   route('invalid-session', 'routes/invalid-session.tsx'),
   route('search', 'routes/search.tsx'),
   ...prefix('api', [

@@ -20,7 +20,7 @@ export function SearchBar() {
         type='text'
         name='q'
         placeholder='find a character'
-        className='w-full border-[1px] border-slate-300 hover:border-slate-400'
+        className='w-full'
         defaultValue={query ?? ''}
       />
     </form>
