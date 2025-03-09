@@ -1,7 +1,13 @@
-import { ActionFunctionArgs, data, redirect } from 'react-router'
+import {
+  type ActionFunctionArgs,
+  data,
+  type LoaderFunction,
+  redirect,
+} from 'react-router'
 import { Login } from '~/components/Login'
-import { createJwt } from '~/helpers/jwt.server'
+import { createJwt, isValidAuthRequest } from '~/helpers/jwt.server'
 import { jwtCookie } from '~/helpers/cookie.server'
+import { pages } from '~/const/pages'
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const { url } = request
@@ -18,6 +24,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       'Set-Cookie': await jwtCookie.serialize(jwt),
     },
   })
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const { url } = request
+  const { searchParams } = new URL(url)
+  const redirectUrl = searchParams.get('url') ?? pages.root
+  const redirectSession = await isValidAuthRequest(request, redirectUrl)
+  // if undefined is a valid session
+  if (!redirectSession) return redirect(redirectUrl)
+  return data(null)
 }
 
 export default function LoginPage() {

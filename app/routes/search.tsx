@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router'
+import { useSearchParams, data } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
 import { cookieFavorite } from '~/helpers/cookie.server'
@@ -19,7 +19,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   // filter from API
   const name = searchParams.get('q') ?? undefined
   const page = searchParams.get('page') ?? '1'
-  let data: Info<Character[]> = {
+  let responseData: Info<Character[]> = {
     info: {
       count: 0,
       next: '',
@@ -28,16 +28,16 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     },
     results: [],
   }
-  if (name) data = await getCharacters({ name, page })
+  if (name) responseData = await getCharacters({ name, page })
   // get cookies
   const favoritesValue: number[] = await cookieFavorite.parse(
     request.headers.get('Cookie')
   )
 
-  return {
-    ...data,
+  return data({
+    ...responseData,
     favorites: favoritesValue ?? [],
-  }
+  })
 }
 
 export default function Search({ loaderData }: Route.ComponentProps) {

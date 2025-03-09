@@ -43,4 +43,5 @@ This template comes with [Tailwind CSS](https://tailwindcss.com/) already config
 ## Environment variables
 
 `SESSION_SECRET`: secret to sign session cookies (only for Prod)
+
 `JWT_SECRET`: secret to sign JWT, you can generate using `openssl rand -base64 32`

@@ -2,6 +2,7 @@ import { SignJWT, jwtVerify } from 'jose'
 import { redirect } from 'react-router'
 import { pages } from '~/const/pages'
 import { jwtCookie } from './cookie.server'
+import { JWTClaims } from '~/types/claims'
 
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET)
 
@@ -10,10 +11,7 @@ const algorithm = 'HS256'
 export function createJwt(request: Request, email: string) {
   const { url } = request
   const { origin } = new URL(url)
-  return new SignJWT({
-    email,
-    jwti: crypto.randomUUID(),
-  })
+  return new SignJWT({ email, jwti: crypto.randomUUID() })
     .setProtectedHeader({ alg: algorithm })
     .setIssuedAt()
     .setIssuer(origin)
@@ -25,7 +23,7 @@ export function verifyJtw(request: Request, jwt: string) {
   try {
     const { url } = request
     const { origin } = new URL(url)
-    return jwtVerify(jwt, jwtSecret, {
+    return jwtVerify<JWTClaims>(jwt, jwtSecret, {
       issuer: origin,
       algorithms: [algorithm],
     })
