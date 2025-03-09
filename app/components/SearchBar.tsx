@@ -1,11 +1,16 @@
 import { useSearchParams, useNavigate } from 'react-router'
-import { FormEvent } from 'react'
+import { FormEvent, useEffect } from 'react'
 import { Input } from '~/components/atoms/Input'
 
 export function SearchBar() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q')
+
+  useEffect(() => {
+    const input = document.querySelector<HTMLInputElement>('input[name=q]')
+    if (input) input.value = query ?? ''
+  }, [query])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -15,7 +20,7 @@ export function SearchBar() {
   }
 
   return (
-    <form className='mx-5 w-[80%]' onSubmit={handleSubmit}>
+    <form id='search-form' className='mx-5 w-[80%]' onSubmit={handleSubmit}>
       <Input
         type='text'
         name='q'
