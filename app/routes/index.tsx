@@ -4,7 +4,7 @@ import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
 import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacters } from '~/services/characters'
-import type { Route } from './+types/_index'
+import type { Route } from './+types/index'
 
 export const meta: MetaFunction = () => {
   return [

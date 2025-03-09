@@ -1,14 +1,18 @@
-import { redirect, data } from 'react-router'
+import {
+  redirect,
+  data,
+  type ActionFunctionArgs,
+  LoaderFunctionArgs,
+} from 'react-router'
 import { cookieToken } from '~/helpers/cookie.server'
-import type { Route } from './+types/session'
 import { pages } from '~/const/pages'
 
-export const action = async ({ request }: Route.ActionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   console.log('/session', request.method)
   return data(null)
 }
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { searchParams } = new URL(request.url)
   const token = searchParams.get('token')
   if (!token) {

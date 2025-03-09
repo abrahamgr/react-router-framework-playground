@@ -2,7 +2,7 @@ import { FullCharacter } from '~/components/FullCharacter'
 import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacter } from '~/services/characters'
 import { getMultipleEpisodes } from '~/services/episodes'
-import type { Route } from './+types/character.$id'
+import type { Route } from './+types/character'
 
 export const meta: Route.MetaFunction = ({ data }) => {
   return [{ title: `Rick & Morty - ${data?.character.name}` }]
