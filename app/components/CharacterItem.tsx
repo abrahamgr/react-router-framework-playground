@@ -4,6 +4,7 @@ import type { Character } from '~/types/rick-morty'
 import starIcon from '~/icons/star.svg'
 import starFilledIcon from '~/icons/star-filled.svg'
 import { internalEndpoints } from '~/const/endpoints'
+import { pages } from '~/const/pages'
 
 export interface CharacterProps {
   character: Character
@@ -15,7 +16,7 @@ export const CharacterItem: FC<CharacterProps> = ({
   isFavorite,
 }) => {
   const fetcher = useFetcher()
-  const isFavoriteOptimistic = fetcher.formData
+  const isFavoriteOptimistic = fetcher?.formData
     ? fetcher.formData.get('characterId')
     : isFavorite
   return (
@@ -34,7 +35,7 @@ export const CharacterItem: FC<CharacterProps> = ({
             />
           </button>
         </fetcher.Form>
-        <Link to={`/character/${id}`} className='hover:underline'>
+        <Link to={`${pages.character}/${id}`} className='hover:underline'>
           {name}
         </Link>
         <p className='text-sm'>{status}</p>

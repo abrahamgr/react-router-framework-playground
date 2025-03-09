@@ -1,4 +1,4 @@
-import { type ActionFunction } from 'react-router'
+import { type ActionFunction, data } from 'react-router'
 import { getThemeSession } from '~/helpers/session.server'
 
 export const action: ActionFunction = async ({ request }) => {
@@ -6,7 +6,7 @@ export const action: ActionFunction = async ({ request }) => {
   const currentTheme = await getTheme()
   await setTheme(currentTheme === 'dark' ? 'light' : 'dark')
 
-  return Response.json(null, {
+  return data(null, {
     headers: {
       'Set-Cookie': await commitSession(),
     },

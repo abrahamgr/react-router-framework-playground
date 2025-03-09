@@ -1,4 +1,4 @@
-import { type ActionFunction } from 'react-router'
+import { data, type ActionFunction } from 'react-router'
 import { setCookieFavorite } from '~/data/favorites.server'
 
 interface FavoriteRequest {
@@ -38,7 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
     request.headers.get('Cookie')!
   )
 
-  return Response.json(null, {
+  return data(null, {
     headers: {
       'Set-Cookie': newFavoriteCookie,
     },

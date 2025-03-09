@@ -3,6 +3,7 @@ import logo from '~/icons/logo.svg'
 import logoDark from '~/icons/logoDark.svg'
 import { SearchBar } from './SearchBar'
 import { ThemeToggle } from './ThemeToggle'
+import { pages } from '~/const/pages'
 
 export const Menu = () => {
   return (
@@ -13,7 +14,7 @@ export const Menu = () => {
           <img src={logoDark} alt='logo' className='hidden dark:flex' />
         </NavLink>
         <SearchBar />
-        <NavLink to='/favorites' className='ml-auto mr-5'>
+        <NavLink to={pages.favorites} className='ml-auto mr-5'>
           Favorites
         </NavLink>
         <ThemeToggle />
