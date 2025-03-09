@@ -9,7 +9,7 @@ export const useFavorite = (id: number) => {
   const handleFavorite = async () => {
     const response = await setFavorite(id)
     if (response.type === 'opaqueredirect') {
-      navigate(pages.login)
+      navigate(`${pages.login}?url=${window.location.pathname}`)
     } else revalidator.revalidate()
   }
 

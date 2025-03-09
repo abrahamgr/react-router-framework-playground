@@ -1,4 +1,4 @@
-import { data, type ActionFunction } from 'react-router'
+import { type ActionFunction } from 'react-router'
 import { pages } from '~/const/pages'
 import { setCookieFavorite } from '~/data/favorites.server'
 import { isValidAuthRequest } from '~/helpers/jwt.server'
@@ -8,7 +8,7 @@ interface FavoriteRequest {
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const badRequest = data(null, { status: 400 })
+  const badRequest = new Response(null, { status: 400 })
   const loginRequest = await isValidAuthRequest(request, pages.root)
   if (loginRequest) return loginRequest
 
@@ -37,14 +37,20 @@ export const action: ActionFunction = async ({ request }) => {
   if (isNaN(characterId) || characterId < 1) return badRequest
 
   // set cookie
+  console.log('adding/removing favorite', characterId)
   const newFavoriteCookie = await setCookieFavorite(
     characterId,
     request.headers.get('Cookie')!
   )
 
-  return data(null, {
+  return new Response(null, {
     headers: {
       'Set-Cookie': newFavoriteCookie,
     },
   })
 }
+
+export const loader = () =>
+  new Response('Method Not Allowed', {
+    status: 405,
+  })
