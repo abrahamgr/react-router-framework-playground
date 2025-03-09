@@ -1,6 +1,7 @@
 # Welcome to Remix!
 
-- 📖 [Remix docs](https://remix.run/docs)
+- 📖 Initially created with [Remix](https://remix.run/docs)
+- 🚀 Migrated to [React router](https://reactrouter.com/) framework
 
 ## Development
 
