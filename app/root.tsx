@@ -4,12 +4,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  LoaderFunctionArgs,
   MetaFunction,
+  LoaderFunctionArgs,
 } from 'react-router'
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'
-import { getThemeSession } from '~/helpers/session.server'
+import { getAllCookies } from './helpers/cookie.server'
 import type { Route } from './+types/root'
 
 export const meta: MetaFunction = () => {
@@ -22,9 +22,8 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  // theme session
-  const { getTheme } = await getThemeSession(request)
-  const theme = getTheme()
+  const cookies = request.headers.get('cookie') ?? ''
+  const theme = getAllCookies(cookies)['theme'] ?? 'dark'
 
   return {
     theme,
@@ -33,9 +32,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function App({ loaderData }: Route.ComponentProps) {
   const { theme } = loaderData
-  const themeClass = theme === 'dark' ? 'dark' : 'light'
   return (
-    <html lang='en' className={themeClass}>
+    <html lang='en' className={theme}>
       <head>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
