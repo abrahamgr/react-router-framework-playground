@@ -1,37 +1,19 @@
 import lightIcon from '~/icons/lightTheme.svg'
 import darkIcon from '~/icons/darkTheme.svg'
-
-interface CookieProps {
-  name: string
-  value: string
-  expires: number
-}
-declare global {
-  interface Window {
-    cookieStore?: {
-      set: (cookieptions: CookieProps) => Promise<void>
-      get: (name: string) => Promise<CookieProps>
-    }
-  }
-}
+import { getCookie, setCookie } from '~/helpers/cookie.client'
 
 export function ThemeToggle() {
   const handleTheme = async () => {
-    if (!window?.cookieStore) return
-
-    const currentTheme =
-      (await window.cookieStore.get('theme'))?.value ?? 'dark'
+    const currentTheme = (await getCookie('theme')) ?? 'dark'
     const theme = currentTheme === 'dark' ? 'light' : 'dark'
+    // 1 year
+    const expires = Date.now() + 365 * 24 * 60 * 60 * 1000
+    await setCookie({ name: 'theme', value: theme, expires })
+    // change theme
     document.documentElement.classList.toggle('dark')
     document
       .querySelector('meta[name="color-scheme"]')
       ?.setAttribute('content', theme)
-    window.cookieStore.set({
-      name: 'theme',
-      value: theme,
-      // 1 year
-      expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
-    })
   }
   return (
     <button type='button' className='cursor-pointer' onClick={handleTheme}>
