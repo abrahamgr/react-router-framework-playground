@@ -17,7 +17,7 @@ declare global {
  * get cookie
  */
 export async function getCookie(name: string) {
-  if (window?.cookieStore) return (await window.cookieStore.get(name)).value
+  if (window?.cookieStore) return (await window.cookieStore.get(name))?.value
   const searchParams = new URLSearchParams(
     document.cookie.replaceAll(' ', '').split(';').join('&')
   )
