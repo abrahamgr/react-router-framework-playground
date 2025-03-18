@@ -6,20 +6,25 @@
   "scripts": {
     "build": "react-router build && cp .env ./build/.env",
     "dev": "react-router dev",
+    "drizzle:generate": "drizzle-kit generate --config ./app/db/drizzle/drizzle.config.ts",
+    "drizzle:migrate": "drizzle-kit migrate --config ./app/db/drizzle/drizzle.config.ts",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "lint:fix": "npm run lint --fix",
     "lint:oxc": "oxlint",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "setup:dockerdb": "docker run --name react-router-rick-morty -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=Admin12345 -e POSTGRES_DB=rickmorty-favorites -p 5432:5432 -v ./postgres-data:/var/lib/postgresql/ -d postgres"
   },
   "dependencies": {
     "@react-router/node": "^7.3.0",
     "@react-router/serve": "^7.3.0",
     "@tailwindcss/vite": "^4.0.12",
     "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.40.1",
     "isbot": "^5.1.17",
     "jose": "^6.0.8",
+    "pg": "^8.14.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.3.0"
@@ -27,10 +32,12 @@
   "devDependencies": {
     "@react-router/dev": "^7.3.0",
     "@types/node": "^22.13.10",
+    "@types/pg": "^8.11.11",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@typescript-eslint/eslint-plugin": "^8.26.0",
     "@typescript-eslint/parser": "^8.26.0",
+    "drizzle-kit": "^0.30.5",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",

@@ -25,6 +25,12 @@ Then run the app in production mode:
 npm start
 ```
 
+Setup postgres db using docker:
+
+```sh
+npm run setup:dockerdb
+```
+
 Now you'll need to pick a host to deploy it to.
 
 ### DIY
@@ -45,3 +51,16 @@ This template comes with [Tailwind CSS](https://tailwindcss.com/) already config
 `SESSION_SECRET`: secret to sign session cookies (only for Prod)
 
 `JWT_SECRET`: secret to sign JWT, you can generate using `openssl rand -base64 32`
+
+`DATABASE_URL`: postgres database url for connection
+
+## Drizzle
+
+`npm run drizzle:generate`: create schema after make modification to drizzle schema.
+Pass `--name` as parameter to specify changes:
+
+```bash
+npm run drizzle:generate -- --name initial_setup
+```
+
+`npm run drizzle:migrate`: migrate changes to DB using the migrations folder
