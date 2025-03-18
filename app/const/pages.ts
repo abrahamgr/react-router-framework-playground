@@ -5,4 +5,5 @@ export const pages = {
   invalidSession: '/invalid-session',
   session: '/session',
   login: '/login',
+  signup: '/signup',
 } as const
