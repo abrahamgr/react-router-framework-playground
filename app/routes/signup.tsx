@@ -1,43 +1,32 @@
-import {
-  type ActionFunctionArgs,
-  data,
-  type LoaderFunction,
-  redirect,
-} from 'react-router'
-import { createJwt, isValidAuthRequest } from '~/helpers/jwt.server'
-import { jwtCookie } from '~/helpers/cookie.server'
+import { type ActionFunctionArgs, data, redirect } from 'react-router'
 import { pages } from '~/const/pages'
 import { Signup } from '~/components/Signup'
+import { registerUser } from '~/db/drizzle/users'
+import { hashPassword } from '~/helpers/password.server'
+import type { Route } from './+types/signup'
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const { url } = request
-  const { searchParams } = new URL(url)
-  const redirectUrl = searchParams.get('url')
+  const { method } = request
+  if (method !== 'POST') return new Response(null, { status: 405 })
+
   const formData = await request.formData()
-  // const name = String(formData.get('name'))
+  const name = String(formData.get('name'))
   const email = String(formData.get('email'))
-  // const password = String(formData.get('password'))
-  if (!email) return data({ error: 'email is required' })
+  const password = String(formData.get('password'))
+  const confirmPassword = String(formData.get('confirm-password'))
 
-  const jwt = await createJwt(request, email)
-  console.log('jwt', jwt)
-  return redirect(redirectUrl ?? '/', {
-    headers: {
-      'Set-Cookie': await jwtCookie.serialize(jwt),
-    },
-  })
+  // validations
+  if (!name || !email || !password)
+    return data({ error: 'some fields are required' }, { status: 400 })
+  if (password !== confirmPassword)
+    return data({ error: 'password should match' }, { status: 400 })
+
+  // store in db
+  const passwordWithHash = hashPassword(password)
+  await registerUser({ name, email, password: passwordWithHash })
+  return redirect(pages.login)
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const { url } = request
-  const { searchParams } = new URL(url)
-  const redirectUrl = searchParams.get('url') ?? pages.root
-  const redirectSession = await isValidAuthRequest(request, redirectUrl)
-  // if undefined is a valid session
-  if (!redirectSession) return redirect(redirectUrl)
-  return data(null)
-}
-
-export default function SignupPage() {
-  return <Signup />
+export default function SignupPage({ actionData }: Route.ComponentProps) {
+  return <Signup error={actionData?.error} />
 }

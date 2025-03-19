@@ -3,17 +3,22 @@ import { Input } from './atoms/Input'
 import { Button } from './atoms/Button'
 import { FormField } from './atoms/FormField'
 import { pages } from '~/const/pages'
+import type { Route } from '../routes/+types/signup'
 
-export interface Signup {
+export interface SignupProps {
   error?: string
 }
 
-export function Signup() {
-  const fetcher = useFetcher()
-  // const error = fetcher.data.error
+export function Signup({ error }: SignupProps) {
+  const fetcher = useFetcher<Route.ActionArgs>()
+  const isSubmitting = fetcher.state !== 'idle'
 
   return (
-    <fetcher.Form method='POST' className='flex w-[500px] flex-col p-5'>
+    <fetcher.Form
+      method='POST'
+      action={pages.signup}
+      className='flex w-[500px] flex-col p-5'
+    >
       <h2 className='bold'>Login</h2>
       <p>To use features you must login</p>
       <FormField>
@@ -40,9 +45,11 @@ export function Signup() {
       <p>
         <Link to={pages.login}>Login if you already have an account</Link>
       </p>
-      {/* {error ? <p className='text-red-500'>{error}</p> : null} */}
+      {error ? <p className='text-red-500'>{error}</p> : null}
       <div className='flex justify-end'>
-        <Button type='submit'>Register</Button>
+        <Button type='submit' disabled={isSubmitting}>
+          Register
+        </Button>
       </div>
     </fetcher.Form>
   )
