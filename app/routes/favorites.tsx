@@ -3,14 +3,14 @@ import { cookieFavorite } from '~/helpers/cookie.server'
 import { getMultipleCharacters } from '~/services/characters'
 import type { Route } from './+types/favorites'
 import { data } from 'react-router'
-import { isValidAuthRequest } from '~/helpers/jwt.server'
+import { getLoginSession } from '~/helpers/jwt.server'
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: 'Rick & Morty - Favorites' }]
 }
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const loginRequest = await isValidAuthRequest(request)
+  const loginRequest = await getLoginSession(request)
   if (loginRequest) return loginRequest
   const currentCookies = request.headers.get('Cookie')
 

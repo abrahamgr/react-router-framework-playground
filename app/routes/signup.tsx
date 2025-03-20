@@ -4,6 +4,8 @@ import { Signup } from '~/components/Signup'
 import { registerUser } from '~/db/drizzle/users'
 import { hashPassword } from '~/helpers/password.server'
 import type { Route } from './+types/signup'
+import { signup } from '~/api-schemas/schemas'
+import { isValidSession } from '~/helpers/jwt.server'
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const { method } = request
@@ -15,9 +17,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const password = String(formData.get('password'))
   const confirmPassword = String(formData.get('confirm-password'))
 
-  // validations
-  if (!name || !email || !password)
-    return data({ error: 'some fields are required' }, { status: 400 })
+  const result = signup.safeParse({ name, email, password, confirmPassword })
+  if (!result.success)
+    return data({ error: 'invalid form data' }, { status: 400 })
+
   if (password !== confirmPassword)
     return data({ error: 'password should match' }, { status: 400 })
 
@@ -25,6 +28,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const passwordWithHash = hashPassword(password)
   await registerUser({ name, email, password: passwordWithHash })
   return redirect(pages.login)
+}
+
+export async function loader({ request }: Route.LoaderArgs) {
+  if (await isValidSession(request)) return redirect(pages.root)
+  return undefined
 }
 
 export default function SignupPage({ actionData }: Route.ComponentProps) {

@@ -8,7 +8,7 @@ export interface LoginProps {
   error?: string
 }
 
-export function Login() {
+export function Login({ error }: LoginProps) {
   const fetcher = useFetcher()
   // const error = fetcher.data.error
 
@@ -29,9 +29,9 @@ export function Login() {
           Register if you don&apos;t have an account
         </Link>
       </p>
-      {/* {error ? <p className='text-red-500'>{error}</p> : null} */}
+      {error ? <p className='text-red-500'>{error}</p> : null}
       <div className='flex justify-end'>
-        <Button type='submit'>Submit</Button>
+        <Button type='submit'>Sign in</Button>
       </div>
     </fetcher.Form>
   )
