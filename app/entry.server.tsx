@@ -7,15 +7,15 @@
 import { PassThrough } from 'node:stream'
 import 'dotenv/config'
 
-import type {
-  // ActionFunctionArgs,
-  AppLoadContext, // LoaderFunctionArgs
-  EntryContext,
-} from 'react-router'
 import { createReadableStreamFromReadable } from '@react-router/node'
-import { ServerRouter } from 'react-router'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
+import type {
+  // ActionFunctionArgs,
+  // AppLoadContext, // LoaderFunctionArgs
+  EntryContext,
+} from 'react-router'
+import { ServerRouter } from 'react-router'
 
 const ABORT_DELAY = 5_000
 
@@ -23,11 +23,11 @@ export default function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  reactRouterContext: EntryContext,
+  reactRouterContext: EntryContext
   // This is ignored so we can keep it in the template for visibility.  Feel
   // free to delete this parameter in your app if you're not using it!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  loadContext: AppLoadContext
+  // loadContext: AppLoadContext
 ) {
   return isbot(request.headers.get('user-agent') || '')
     ? handleBotRequest(

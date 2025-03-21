@@ -1,4 +1,5 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { type VariantProps, cva } from 'class-variance-authority'
+import type { ButtonHTMLAttributes } from 'react'
 
 const getButtonClass = cva(
   [
@@ -32,7 +33,7 @@ const getButtonClass = cva(
 )
 
 export interface ButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>,
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>,
     VariantProps<typeof getButtonClass> {}
 
 export function Button({

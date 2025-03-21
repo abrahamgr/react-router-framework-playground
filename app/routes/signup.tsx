@@ -1,11 +1,11 @@
 import { type ActionFunctionArgs, data, redirect } from 'react-router'
-import { pages } from '~/const/pages'
+import { signup } from '~/api-schemas/schemas'
 import { Signup } from '~/components/Signup'
+import { pages } from '~/const/pages'
 import { registerUser } from '~/db/drizzle/users'
+import { isValidSession } from '~/helpers/jwt.server'
 import { hashPassword } from '~/helpers/password.server'
 import type { Route } from './+types/signup'
-import { signup } from '~/api-schemas/schemas'
-import { isValidSession } from '~/helpers/jwt.server'
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const { method } = request

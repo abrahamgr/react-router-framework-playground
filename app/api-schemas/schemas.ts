@@ -1,13 +1,13 @@
 import { z } from 'zod'
 import {
-  name,
-  email,
-  password,
-  confirmPassword,
   characterId,
+  characterIdForm,
+  confirmPassword,
+  email,
   isFavorite,
   isFavoriteForm,
-  characterIdForm,
+  name,
+  password,
 } from './fields'
 
 export const signup = z.object({

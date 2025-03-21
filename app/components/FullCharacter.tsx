@@ -1,9 +1,9 @@
 import { type FC } from 'react'
-import starIcon from '~/icons/star.svg'
-import starFilledIcon from '~/icons/star-filled.svg'
 import { CharacterProps } from '~/components/CharacterItem'
-import { useFavorite } from '~/hooks/useFavorite'
 import { EpisodeList } from '~/components/EpisodeList'
+import { useFavorite } from '~/hooks/useFavorite'
+import starFilledIcon from '~/icons/star-filled.svg'
+import starIcon from '~/icons/star.svg'
 import { Episode } from '~/types/rick-morty'
 
 interface FullCharacterProps extends CharacterProps {
@@ -20,7 +20,7 @@ export const FullCharacter: FC<FullCharacterProps> = ({
   return (
     <div className='flex w-full justify-center'>
       <div className='flex max-w-xl flex-col pt-10'>
-        <h2 className='text-xl font-bold'>{name}</h2>
+        <h2 className='font-bold text-xl'>{name}</h2>
         <div className='relative'>
           <img src={image} alt={name} className='w-60 rounded-l-sm' />
           <button className='absolute top-3 right-3' onClick={handleFavorite}>

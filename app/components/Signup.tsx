@@ -1,9 +1,9 @@
 import { Link, useFetcher } from 'react-router'
-import { Input } from './atoms/Input'
-import { Button } from './atoms/Button'
-import { FormField } from './atoms/FormField'
 import { pages } from '~/const/pages'
 import type { Route } from '../routes/+types/signup'
+import { Button } from './atoms/Button'
+import { FormField } from './atoms/FormField'
+import { Input } from './atoms/Input'
 
 export interface SignupProps {
   error?: string

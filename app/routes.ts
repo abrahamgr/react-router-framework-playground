@@ -1,8 +1,8 @@
 import {
   type RouteConfig,
-  route,
   index,
   prefix,
+  route,
 } from '@react-router/dev/routes'
 
 export default [

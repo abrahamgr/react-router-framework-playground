@@ -1,6 +1,6 @@
-import lightIcon from '~/icons/lightTheme.svg'
-import darkIcon from '~/icons/darkTheme.svg'
 import { getCookie, setCookie } from '~/helpers/cookie.client'
+import darkIcon from '~/icons/darkTheme.svg'
+import lightIcon from '~/icons/lightTheme.svg'
 
 export function ThemeToggle() {
   const handleTheme = async () => {

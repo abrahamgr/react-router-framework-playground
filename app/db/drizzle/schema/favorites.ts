@@ -1,4 +1,4 @@
-import { integer, pgTable, timestamp, index, uuid } from 'drizzle-orm/pg-core'
+import { index, integer, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { usersTable } from './users'
 
 export const favoritesTable = pgTable(
@@ -10,5 +10,5 @@ export const favoritesTable = pgTable(
       .notNull(),
     created: timestamp().defaultNow().notNull(),
   },
-  (table) => [index('user_id_idx').on(table.userId)]
+  table => [index('user_id_idx').on(table.userId)]
 )

@@ -1,7 +1,7 @@
 import type { FC, PropsWithChildren } from 'react'
 import { useNavigation } from 'react-router'
-import { Menu } from './Menu'
 import { Loading } from './Loading'
+import { Menu } from './Menu'
 
 export const LayoutComponent: FC<PropsWithChildren> = ({ children }) => {
   const navigation = useNavigation()
