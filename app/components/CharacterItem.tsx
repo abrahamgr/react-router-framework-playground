@@ -24,6 +24,11 @@ export const CharacterItem: FC<CharacterProps> = ({
       <img src={image} alt={name} className='w-40 rounded-l-sm' />
       <div className='flex w-full flex-col p-3'>
         <fetcher.Form method='POST' action={internalEndpoints.favorites}>
+          <input
+            type='hidden'
+            name='isFavorite'
+            value={isFavoriteOptimistic ? 1 : 0}
+          />
           <button
             className='cursor-pointer self-end'
             name='characterId'

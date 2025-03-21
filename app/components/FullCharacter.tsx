@@ -15,7 +15,7 @@ export const FullCharacter: FC<FullCharacterProps> = ({
   episodes,
   isFavorite,
 }) => {
-  const { handleFavorite } = useFavorite(id)
+  const { handleFavorite } = useFavorite(id, isFavorite ? 1 : 0)
 
   return (
     <div className='flex w-full justify-center'>
@@ -23,7 +23,7 @@ export const FullCharacter: FC<FullCharacterProps> = ({
         <h2 className='text-xl font-bold'>{name}</h2>
         <div className='relative'>
           <img src={image} alt={name} className='w-60 rounded-l-sm' />
-          <button className='absolute right-3 top-3' onClick={handleFavorite}>
+          <button className='absolute top-3 right-3' onClick={handleFavorite}>
             <img src={isFavorite ? starFilledIcon : starIcon} alt='favorite' />
           </button>
         </div>

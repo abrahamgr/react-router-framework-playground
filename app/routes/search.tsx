@@ -1,10 +1,11 @@
 import { useSearchParams, data } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
-import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacters } from '~/services/characters'
 import type { Character, Info } from '~/types/rick-morty'
 import type { Route } from './+types/search'
+import { getUserSession } from '~/helpers/jwt.server'
+import { getUserFavorites } from '~/db/drizzle/favorites'
 
 export const meta: Route.MetaFunction = () => {
   return [
@@ -29,14 +30,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     results: [],
   }
   if (name) responseData = await getCharacters({ name, page })
-  // get cookies
-  const favoritesValue: number[] = await cookieFavorite.parse(
-    request.headers.get('Cookie')
-  )
+
+  let favoriteIds: number[] = []
+  const user = await getUserSession(request)
+  if (user) {
+    const userFavorites = await getUserFavorites(user.payload.id)
+    // get cookies
+    favoriteIds = userFavorites.map((favorite) => favorite.characterId)
+  }
 
   return data({
     ...responseData,
-    favorites: favoritesValue ?? [],
+    favorites: favoriteIds,
   })
 }
 

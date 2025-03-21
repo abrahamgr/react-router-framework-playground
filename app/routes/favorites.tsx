@@ -1,9 +1,9 @@
 import { CharacterList } from '~/components/CharacterList'
-import { cookieFavorite } from '~/helpers/cookie.server'
 import { getMultipleCharacters } from '~/services/characters'
 import type { Route } from './+types/favorites'
 import { data } from 'react-router'
-import { getLoginSession } from '~/helpers/jwt.server'
+import { getLoginSession, getUserSession } from '~/helpers/jwt.server'
+import { getUserFavorites } from '~/db/drizzle/favorites'
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: 'Rick & Morty - Favorites' }]
@@ -12,10 +12,14 @@ export const meta: Route.MetaFunction = () => {
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const loginRequest = await getLoginSession(request)
   if (loginRequest) return loginRequest
-  const currentCookies = request.headers.get('Cookie')
+
+  const user = await getUserSession(request)
+  if (!user) return new Response(null, { status: 401 })
+
+  const userFavorites = await getUserFavorites(user.payload.id)
 
   // get cookies
-  const favoriteIds: number[] = await cookieFavorite.parse(currentCookies)
+  const favoriteIds = userFavorites.map((favorite) => favorite.characterId)
   // get data from API
   const favorites = await getMultipleCharacters(favoriteIds)
 
@@ -30,7 +34,7 @@ export default function Index({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className='flex flex-col items-center p-4 font-sans'>
-      {favorites.length ? (
+      {favorites?.length ? (
         <CharacterList characters={favorites} favorites={favoriteIds} />
       ) : (
         <p>There are no favorites</p>

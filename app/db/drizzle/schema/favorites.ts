@@ -4,12 +4,11 @@ import { usersTable } from './users'
 export const favoritesTable = pgTable(
   'favorites',
   {
-    id: integer().primaryKey(),
-    userId: uuid().references(() => usersTable.id),
+    characterId: integer().notNull(),
+    userId: uuid()
+      .references(() => usersTable.id)
+      .notNull(),
     created: timestamp().defaultNow().notNull(),
   },
-  (table) => [
-    index('favorite_id_idx').on(table.id),
-    index('user_id_idx').on(table.userId),
-  ]
+  (table) => [index('user_id_idx').on(table.userId)]
 )

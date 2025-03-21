@@ -2,12 +2,12 @@ import { SignJWT, jwtVerify } from 'jose'
 import { redirect } from 'react-router'
 import { pages } from '~/const/pages'
 import { jwtCookie } from './cookie.server'
-import { JWTClaims } from '~/types/claims'
+import { JWTPayload } from '~/types/claims'
 
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET)
 const algorithm = 'HS256'
 
-export function createJwt(request: Request, claims: JWTClaims) {
+export function createJwt(request: Request, claims: JWTPayload) {
   const { url } = request
   const { origin } = new URL(url)
   return new SignJWT({ ...claims, jwti: crypto.randomUUID() })
@@ -22,7 +22,7 @@ export function verifyJtw(request: Request, jwt: string) {
   try {
     const { url } = request
     const { origin } = new URL(url)
-    return jwtVerify<JWTClaims>(jwt, jwtSecret, {
+    return jwtVerify<JWTPayload>(jwt, jwtSecret, {
       issuer: origin,
       algorithms: [algorithm],
     })
@@ -39,15 +39,19 @@ export async function getLoginSession(request: Request, redirectUrl?: string) {
   const redirectResponse = redirect(
     `${pages.login}?url=${redirectUrl ?? pathname}`
   )
-  if (!(await isValidSession(request))) return redirectResponse
-  return undefined
+  const isValid = await isValidSession(request)
+  return isValid ? undefined : redirectResponse
+}
+
+export async function getUserSession(request: Request) {
+  const currentCookies = request.headers.get('Cookie')
+  const jwt = await jwtCookie.parse(currentCookies)
+  if (!jwt) return undefined
+  return verifyJtw(request, jwt)
 }
 
 export async function isValidSession(request: Request) {
-  const currentCookies = request.headers.get('Cookie')
-  const jwt = await jwtCookie.parse(currentCookies)
-  if (!jwt) return false
-  const claims = await verifyJtw(request, jwt)
+  const claims = await getUserSession(request)
   if (!claims) return false
   return true
 }

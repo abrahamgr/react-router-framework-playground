@@ -2,9 +2,10 @@ import { type LoaderFunctionArgs, type MetaFunction } from 'react-router'
 import { useSearchParams } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
-import { cookieFavorite } from '~/helpers/cookie.server'
 import { getCharacters } from '~/services/characters'
 import type { Route } from './+types/index'
+import { getUserSession } from '~/helpers/jwt.server'
+import { getUserFavorites } from '~/db/drizzle/favorites'
 
 export const meta: MetaFunction = () => {
   return [
@@ -20,13 +21,18 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const page = searchParams.get('page') ?? undefined
   const data = await getCharacters(page ? { page } : undefined)
   // get cookies
-  const favoritesValue: number[] = await cookieFavorite.parse(
-    request.headers.get('Cookie')
-  )
+
+  let favoriteIds: number[] = []
+  const user = await getUserSession(request)
+  if (user) {
+    const userFavorites = await getUserFavorites(user.payload.id)
+    // get cookies
+    favoriteIds = userFavorites.map((favorite) => favorite.characterId)
+  }
 
   return {
     ...data,
-    favorites: favoritesValue ?? [],
+    favorites: favoriteIds,
   }
 }
 
