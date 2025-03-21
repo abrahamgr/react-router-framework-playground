@@ -18,7 +18,7 @@ export const usersTable = pgTable(
     enabled: boolean().default(true).notNull(),
     created: timestamp().defaultNow().notNull(),
   },
-  (table) => [
+  table => [
     uniqueIndex('email_idx').on(table.email),
     index('id_idx').on(table.id),
   ]

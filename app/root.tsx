@@ -1,16 +1,16 @@
 import {
   Links,
+  LoaderFunctionArgs,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
-  MetaFunction,
-  LoaderFunctionArgs,
 } from 'react-router'
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'
-import { getAllCookies } from './helpers/cookie.server'
 import type { Route } from './+types/root'
+import { getAllCookies } from './helpers/cookie.server'
 
 export const meta: MetaFunction = () => {
   return [

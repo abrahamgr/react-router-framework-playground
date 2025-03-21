@@ -1,8 +1,8 @@
 import { Link, useFetcher } from 'react-router'
-import { Input } from './atoms/Input'
+import { pages } from '~/const/pages'
 import { Button } from './atoms/Button'
 import { FormField } from './atoms/FormField'
-import { pages } from '~/const/pages'
+import { Input } from './atoms/Input'
 
 export interface LoginProps {
   error?: string

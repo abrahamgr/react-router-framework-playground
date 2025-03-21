@@ -1,7 +1,7 @@
 import { and, eq } from 'drizzle-orm'
 import { db } from './index'
 import { favoritesTable } from './schema'
-import type { SelectFavorite, InsertFavorite } from './typings'
+import type { InsertFavorite, SelectFavorite } from './typings'
 
 export function getUserFavorites(
   userId: string,

@@ -1,8 +1,8 @@
 import { SignJWT, jwtVerify } from 'jose'
 import { redirect } from 'react-router'
 import { pages } from '~/const/pages'
-import { jwtCookie } from './cookie.server'
 import { JWTPayload } from '~/types/claims'
+import { jwtCookie } from './cookie.server'
 
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET)
 const algorithm = 'HS256'

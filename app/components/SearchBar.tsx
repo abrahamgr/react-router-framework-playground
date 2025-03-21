@@ -1,5 +1,5 @@
-import { useSearchParams, useNavigate } from 'react-router'
 import { FormEvent, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
 import { Input } from '~/components/atoms/Input'
 
 export function SearchBar() {

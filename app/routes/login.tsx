@@ -1,16 +1,16 @@
 import {
   type ActionFunctionArgs,
-  data,
   type LoaderFunction,
+  data,
   redirect,
 } from 'react-router'
-import { Login } from '~/components/Login'
-import { createJwt, isValidSession } from '~/helpers/jwt.server'
-import { jwtCookie } from '~/helpers/cookie.server'
-import { pages } from '~/const/pages'
 import { login } from '~/api-schemas/schemas'
-import { hashPassword } from '~/helpers/password.server'
+import { Login } from '~/components/Login'
+import { pages } from '~/const/pages'
 import { loginUser } from '~/db/drizzle/users'
+import { jwtCookie } from '~/helpers/cookie.server'
+import { createJwt, isValidSession } from '~/helpers/jwt.server'
+import { hashPassword } from '~/helpers/password.server'
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const { url } = request

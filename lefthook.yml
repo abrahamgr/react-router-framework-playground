@@ -7,6 +7,6 @@ pre-commit:
   parallel: true
   jobs:
     - name: biome
-      run: npx @biomejs/biome check --write {staged_files}
+      run: npm run lint:fix -- --no-errors-on-unmatched {staged_files}
       glob: '*.{css,js,jsx,ts,tsx,md,yml,json}'
       stage_fixed: true

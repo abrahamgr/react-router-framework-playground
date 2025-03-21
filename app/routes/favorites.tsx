@@ -1,9 +1,9 @@
+import { data } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
+import { getUserFavorites } from '~/db/drizzle/favorites'
+import { getLoginSession, getUserSession } from '~/helpers/jwt.server'
 import { getMultipleCharacters } from '~/services/characters'
 import type { Route } from './+types/favorites'
-import { data } from 'react-router'
-import { getLoginSession, getUserSession } from '~/helpers/jwt.server'
-import { getUserFavorites } from '~/db/drizzle/favorites'
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: 'Rick & Morty - Favorites' }]
@@ -19,7 +19,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   const userFavorites = await getUserFavorites(user.payload.id)
 
   // get cookies
-  const favoriteIds = userFavorites.map((favorite) => favorite.characterId)
+  const favoriteIds = userFavorites.map(favorite => favorite.characterId)
   // get data from API
   const favorites = await getMultipleCharacters(favoriteIds)
 

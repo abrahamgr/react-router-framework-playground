@@ -1,4 +1,4 @@
-import { data, type ActionFunction } from 'react-router'
+import { type ActionFunction, data } from 'react-router'
 import { favorite, favoriteForm } from '~/api-schemas/schemas'
 import { pages } from '~/const/pages'
 import { insertFavorite, removeFavorite } from '~/db/drizzle/favorites'

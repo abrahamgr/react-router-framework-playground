@@ -1,10 +1,10 @@
-import { Link, useFetcher } from 'react-router'
 import { type FC } from 'react'
-import type { Character } from '~/types/rick-morty'
-import starIcon from '~/icons/star.svg'
-import starFilledIcon from '~/icons/star-filled.svg'
+import { Link, useFetcher } from 'react-router'
 import { internalEndpoints } from '~/const/endpoints'
 import { pages } from '~/const/pages'
+import starFilledIcon from '~/icons/star-filled.svg'
+import starIcon from '~/icons/star.svg'
+import type { Character } from '~/types/rick-morty'
 
 export interface CharacterProps {
   character: Character
