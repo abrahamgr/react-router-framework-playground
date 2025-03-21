@@ -13,7 +13,7 @@
     "lint:oxc": "oxlint",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "prepare": "husky || true",
+    "prepare": "lefthook install || true",
     "setup:dockerdb": "docker run --name react-router-rick-morty -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=Admin12345 -e POSTGRES_DB=rickmorty-favorites -p 5432:5432 -v ./postgres-data:/var/lib/postgresql/ -d postgres"
   },
   "dependencies": {
@@ -47,8 +47,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.10",
+    "lefthook": "^1.11.3",
     "oxlint": "^0.15.13",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
@@ -59,13 +58,5 @@
   },
   "engines": {
     "node": ">=20.0.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "oxlint --fix --fix-suggestions",
-      "eslint --fix",
-      "prettier -w"
-    ],
-    "*.{css,js,jsx,md,yml,json}": "prettier -w"
   }
 }
