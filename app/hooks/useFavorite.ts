@@ -2,7 +2,7 @@ import { useNavigate, useRevalidator } from 'react-router'
 import { pages } from '~/const/pages'
 import { setFavorite } from '~/services/favorites'
 
-export const useFavorite = (id: number, isFavorite: 0 | 1) => {
+export const useFavorite = (id: number, isFavorite: boolean) => {
   const revalidator = useRevalidator()
   const navigate = useNavigate()
 

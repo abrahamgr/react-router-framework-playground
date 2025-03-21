@@ -1,5 +1,14 @@
 import { z } from 'zod'
-import { name, email, password, confirmPassword } from './fields'
+import {
+  name,
+  email,
+  password,
+  confirmPassword,
+  characterId,
+  isFavorite,
+  isFavoriteForm,
+  characterIdForm,
+} from './fields'
 
 export const signup = z.object({
   name,
@@ -11,4 +20,14 @@ export const signup = z.object({
 export const login = z.object({
   email,
   password,
+})
+
+export const favoriteForm = z.object({
+  characterId: characterIdForm,
+  isFavorite: isFavoriteForm,
+})
+
+export const favorite = z.object({
+  characterId,
+  isFavorite,
 })

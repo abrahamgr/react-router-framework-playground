@@ -15,7 +15,7 @@ export const FullCharacter: FC<FullCharacterProps> = ({
   episodes,
   isFavorite,
 }) => {
-  const { handleFavorite } = useFavorite(id, isFavorite ? 1 : 0)
+  const { handleFavorite } = useFavorite(id, isFavorite)
 
   return (
     <div className='flex w-full justify-center'>
