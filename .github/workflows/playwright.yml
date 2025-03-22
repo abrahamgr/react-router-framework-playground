@@ -36,25 +36,28 @@ jobs:
     env:
       SESSION_SECRET: sesion-secret
       JWT_SECRET: jwt-secret
-      DATABASE_URL: postgres://admin:Admin12345@0.0.0.0:5432/rickmorty-favorites
+      DATABASE_URL: postgres://admin:Admin12345@postgres:5432/rickmorty-favorites
       PASSWORD_KEY: password-secret
+      HOST: localhost
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
+
       - name: Install dependencies
         run: npm ci
+
       - name: Create DB
         run: npm run drizzle:migrate
-      - name: Build
-        run: npm run build:e2e
-      - name: Start app
-        run: npm run start
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+        if: ${{ !failure() }}
+
       - name: Run Playwright tests
         run: npx playwright test
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
