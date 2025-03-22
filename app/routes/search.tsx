@@ -7,13 +7,6 @@ import { getCharacters } from '~/services/characters'
 import type { Character, Info } from '~/types/rick-morty'
 import type { Route } from './+types/search'
 
-export const meta: Route.MetaFunction = () => {
-  return [
-    { title: 'Rick & Morty - Remix' },
-    { name: 'Remix App', content: 'Welcome to Rick & Morty!' },
-  ]
-}
-
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { searchParams } = new URL(request.url)
 

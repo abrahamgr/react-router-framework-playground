@@ -5,10 +5,6 @@ import { getLoginSession, getUserSession } from '~/helpers/jwt.server'
 import { getMultipleCharacters } from '~/services/characters'
 import type { Route } from './+types/favorites'
 
-export const meta: Route.MetaFunction = () => {
-  return [{ title: 'Rick & Morty - Favorites' }]
-}
-
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const loginRequest = await getLoginSession(request)
   if (loginRequest) return loginRequest

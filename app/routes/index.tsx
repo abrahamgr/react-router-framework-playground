@@ -7,13 +7,6 @@ import { getUserSession } from '~/helpers/jwt.server'
 import { getCharacters } from '~/services/characters'
 import type { Route } from './+types/index'
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: 'Rick & Morty - Remix' },
-    { name: 'Remix App', content: 'Welcome to Rick & Morty!' },
-  ]
-}
-
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { searchParams } = new URL(request.url)
 

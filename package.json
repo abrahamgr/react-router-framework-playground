@@ -4,7 +4,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "react-router build && cp .env ./build/.env",
+    "build": "react-router build",
+    "build:e2e": "npm run build && cp .env ./build/.env",
     "dev": "react-router dev",
     "drizzle:generate": "drizzle-kit generate --config ./app/db/drizzle/drizzle.config.ts",
     "drizzle:migrate": "drizzle-kit migrate --config ./app/db/drizzle/drizzle.config.ts",
@@ -50,6 +51,6 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "22.x"
   }
 }
