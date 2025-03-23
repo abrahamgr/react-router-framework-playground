@@ -50,9 +50,13 @@ This template comes with [Tailwind CSS](https://tailwindcss.com/) already config
 
 `SESSION_SECRET`: secret to sign session cookies (only for Prod)
 
-`JWT_SECRET`: secret to sign JWT, you can generate using `openssl rand -base64 32`
+`JWT_SECRET`: secret to sign JWT
 
 `DATABASE_URL`: postgres database url for connection
+
+`PASSWORD_KEY`: secret key to hash passwords
+
+**Note:** You can use `openssl rand -base64 32` to generate random string
 
 ## Drizzle
 

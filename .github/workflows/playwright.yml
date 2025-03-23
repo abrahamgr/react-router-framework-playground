@@ -20,9 +20,9 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_PASSWORD: Admin12345
-          POSTGRES_USER: admin
-          POSTGRES_DB: rickmorty-favorites
+          POSTGRES_PASSWORD:  ${{ vars.POSTGRES_PASSWORD}}
+          POSTGRES_USER: ${{ vars.POSTGRES_USER}}
+          POSTGRES_DB: ${{ vars.POSTGRES_DB }}
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -34,10 +34,10 @@ jobs:
           - 5432:5432
     
     env:
-      SESSION_SECRET: sesion-secret
-      JWT_SECRET: jwt-secret
-      DATABASE_URL: postgres://admin:Admin12345@postgres:5432/rickmorty-favorites
-      PASSWORD_KEY: password-secret
+      SESSION_SECRET: ${{ secrets.SESSION_SECRET}}
+      JWT_SECRET: ${{ secrets.JWT_SECRET}}
+      PASSWORD_KEY: ${{ secrets.PASSWORD_KEY}}
+      DATABASE_URL: postgres://${{ vars.POSTGRES_USER }}:${{ vars.POSTGRES_PASSWORD }}@postgres:5432/${{ vars.POSTGRES_DB }}
       HOST: localhost
     steps:
       - uses: actions/checkout@v4
