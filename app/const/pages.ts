@@ -6,4 +6,5 @@ export const pages = {
   session: '/session',
   login: '/login',
   signup: '/signup',
+  logout: '/logout',
 } as const

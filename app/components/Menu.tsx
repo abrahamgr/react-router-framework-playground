@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router'
+import { NavLink, useLocation } from 'react-router'
 import { pages } from '~/const/pages'
 import logo from '~/icons/logo.svg'
 import logoDark from '~/icons/logoDark.svg'
@@ -6,6 +6,7 @@ import { SearchBar } from './SearchBar'
 import { ThemeToggle } from './ThemeToggle'
 
 export const Menu = () => {
+  const location = useLocation()
   return (
     <header className='w-full'>
       <nav className='flex w-full items-center border-slate-300 border-y-[1px] p-3'>
@@ -16,6 +17,12 @@ export const Menu = () => {
         <SearchBar />
         <NavLink to={pages.favorites} className='mr-5 ml-auto'>
           Favorites
+        </NavLink>
+        <NavLink
+          to={`${pages.logout}?url=${location.pathname}`}
+          className='mr-5 ml-auto'
+        >
+          Logout
         </NavLink>
         <ThemeToggle />
       </nav>
