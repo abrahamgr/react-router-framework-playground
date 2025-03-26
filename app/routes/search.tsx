@@ -1,5 +1,6 @@
-import { data, useSearchParams } from 'react-router'
+import { useSearchParams } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
+import { Loading } from '~/components/Loading'
 import { Pagination } from '~/components/Pagination'
 import { getUserFavorites } from '~/db/drizzle/favorites'
 import { getUserSession } from '~/helpers/jwt.server'
@@ -7,7 +8,10 @@ import { getCharacters } from '~/services/characters'
 import type { Character, Info } from '~/types/rick-morty'
 import type { Route } from './+types/search'
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
+export const clientLoader = async ({
+  request,
+  serverLoader,
+}: Route.ClientLoaderArgs) => {
   const { searchParams } = new URL(request.url)
 
   // filter from API
@@ -23,7 +27,21 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     results: [],
   }
   if (name) responseData = await getCharacters({ name, page })
+  const { favorites } = await serverLoader()
+  return {
+    favorites,
+    ...responseData,
+  }
+}
 
+// force the client loader to run during hydration
+clientLoader.hydrate = true as const // `as const` for type inference
+
+export function HydrateFallback() {
+  return <Loading />
+}
+
+export const loader = async ({ request }: Route.LoaderArgs) => {
   let favoriteIds: number[] = []
   const user = await getUserSession(request)
   if (user) {
@@ -32,16 +50,17 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     favoriteIds = userFavorites.map(favorite => favorite.characterId)
   }
 
-  return data({
-    ...responseData,
+  return {
     favorites: favoriteIds,
-  })
+  }
 }
 
 export default function Search({ loaderData }: Route.ComponentProps) {
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q')
-  const { results, info, favorites } = loaderData
+  const { results, info, favorites } = loaderData as Info<Character[]> & {
+    favorites: number[]
+  }
   const component = query ? (
     results?.length ? (
       <>
