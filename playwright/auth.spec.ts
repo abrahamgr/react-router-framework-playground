@@ -1,6 +1,15 @@
 import { expect, test } from '@playwright/test'
 import { pages } from '~/const/pages'
+import { runResetSeed, runSeed } from '~/db/drizzle/helpers'
 import { fillLoginAndSubmit } from './common'
+
+test.beforeAll(async () => {
+  await runSeed()
+})
+
+test.afterAll(async () => {
+  await runResetSeed()
+})
 
 test('user should be able to login', async ({ page }) => {
   await page.goto(pages.login)
@@ -8,6 +17,7 @@ test('user should be able to login', async ({ page }) => {
   await fillLoginAndSubmit(page)
   await expect(page).toHaveURL('/')
 })
+
 test('user should be able to register and login', async ({ page }) => {
   const email = 'new-user@mail.com'
   const password = 'Admin12345'
