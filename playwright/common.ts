@@ -1,5 +1,4 @@
 import { type Page, expect } from '@playwright/test'
-import { pages } from '~/const/pages'
 
 interface LoginParams {
   email?: string

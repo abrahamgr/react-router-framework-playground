@@ -24,7 +24,11 @@ export const FullCharacter: FC<FullCharacterProps> = ({
         <div className='relative'>
           <img src={image} alt={name} className='w-60 rounded-l-sm' />
           <button className='absolute top-3 right-3' onClick={handleFavorite}>
-            <img src={isFavorite ? starFilledIcon : starIcon} alt='favorite' />
+            <img
+              src={isFavorite ? starFilledIcon : starIcon}
+              alt='favorite'
+              aria-label={isFavorite ? 'unfavorite' : 'favorite'}
+            />
           </button>
         </div>
         <div className='flex w-full flex-col p-3'>

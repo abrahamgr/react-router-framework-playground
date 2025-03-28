@@ -1,4 +1,4 @@
-import { type Page, expect, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import { pages } from '~/const/pages'
 import {
   fillLoginAndSubmit,
@@ -26,7 +26,7 @@ test('user should save favorites from root', async ({ page }) => {
     'unfavorite'
   )
 })
-test.skip('user should remove favorites', async ({ page }) => {
+test('user should save favorites from character page', async ({ page }) => {
   // login
   await page.goto(pages.login)
   await fillLoginAndSubmit(page)
@@ -37,7 +37,11 @@ test.skip('user should remove favorites', async ({ page }) => {
   await page
     .locator(`button[value="${characterId}"]`)
     .locator('xpath=..')
+    .locator('xpath=..')
     .getByRole('link')
     .click()
   await expect(page).toHaveURL(new RegExp(`${pages.character}/${characterId}`))
+  // save favorite from that page
+  await page.locator('img[aria-label="favorite"]').click()
+  await page.waitForSelector('img[aria-label="unfavorite"]')
 })
