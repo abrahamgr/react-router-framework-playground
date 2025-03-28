@@ -37,6 +37,7 @@ export const CharacterItem: FC<CharacterProps> = ({
             <img
               src={isFavoriteOptimistic ? starFilledIcon : starIcon}
               alt='favorite'
+              aria-label={isFavoriteOptimistic ? 'unfavorite' : 'favorite'}
             />
           </button>
         </fetcher.Form>

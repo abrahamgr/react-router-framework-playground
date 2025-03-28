@@ -19,8 +19,7 @@ export function Signup({ error }: SignupProps) {
       action={pages.signup}
       className='flex w-[500px] flex-col p-5'
     >
-      <h2 className='bold'>Login</h2>
-      <p>To use features you must login</p>
+      <h2 className='bold'>Signup</h2>
       <FormField>
         <label htmlFor='name'>Name</label>
         <Input id='name' name='name' type='text' required />
