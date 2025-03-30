@@ -1,5 +1,6 @@
 import { type Page, expect, test } from '@playwright/test'
 import { pages } from '~/const/pages'
+import { runResetSeed, runSeed } from '~/db/drizzle/helpers'
 import { fillLoginAndSubmit } from './common'
 
 async function clickOnRick(page: Page) {
@@ -7,6 +8,7 @@ async function clickOnRick(page: Page) {
 }
 
 test.describe('navigation without login', () => {
+  test.describe.configure({ mode: 'parallel' })
   test('app started', async ({ page }) => {
     await page.goto('/')
     await expect(page).toHaveTitle(/Rick & Morty/)
@@ -21,20 +23,20 @@ test.describe('navigation without login', () => {
     await page.goto('/')
     await page.getByRole('link', { name: 'Favorites' }).click()
     await expect(page.locator('h2')).toHaveText(/Login/)
-    expect(page).toHaveURL(new RegExp(pages.login))
+    await expect(page).toHaveURL(new RegExp(pages.login))
   })
   test('should redirect to login - save favorite', async ({ page }) => {
     await page.goto('/')
-    await page.locator('form > .cursor-pointer').first().click()
+    await page.locator('img[aria-label="favorite"]').first().click()
     await expect(page.locator('h2')).toHaveText(/Login/)
-    expect(page).toHaveURL(new RegExp(pages.login))
+    await expect(page).toHaveURL(new RegExp(pages.login))
   })
   test('should redirect to login - character page', async ({ page }) => {
     await page.goto('/')
     await clickOnRick(page)
     await page.getByRole('button', { name: 'favorite' }).click()
     await expect(page.locator('h2')).toHaveText(/Login/)
-    expect(page).toHaveURL(new RegExp(pages.login))
+    await expect(page).toHaveURL(new RegExp(pages.login))
   })
   test('should go to signup from login', async ({ page }) => {
     await page.goto(pages.login)
@@ -53,6 +55,13 @@ test.describe('navigation without login', () => {
 })
 
 test.describe('navigation with user logged in', () => {
+  test.beforeEach(async () => {
+    await runSeed()
+  })
+  test.afterEach(async () => {
+    await runResetSeed()
+  })
+
   test('login and navigate to favorites', async ({ page }) => {
     await page.goto(pages.login)
     await fillLoginAndSubmit(page)

@@ -1,4 +1,5 @@
 import { type Page, expect } from '@playwright/test'
+import { DEFAULT } from './const'
 
 interface LoginParams {
   email?: string
@@ -6,7 +7,7 @@ interface LoginParams {
 }
 
 export async function fillLoginAndSubmit(page: Page, options?: LoginParams) {
-  const { email = 'user@email.com', password = 'Admin12345' } = options ?? {}
+  const { email = DEFAULT.email, password = DEFAULT.password } = options ?? {}
   await page.getByRole('textbox', { name: 'Email' }).fill(email)
   await page.getByRole('textbox', { name: 'Password' }).fill(password)
   await page.getByRole('button', { name: 'Sign in' }).click()
