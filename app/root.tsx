@@ -10,7 +10,10 @@ import {
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'
 import type { Route } from './+types/root'
+import { UserContext } from './context/UserContext'
 import { getAllCookies } from './helpers/cookie.server'
+import { getUserSession } from './helpers/jwt.server'
+import { UserProvider } from './providers/UserProvider'
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,14 +27,19 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const cookies = request.headers.get('cookie') ?? ''
   const theme = getAllCookies(cookies)['theme'] ?? 'dark'
+  const userData = await getUserSession(request)
+  const user = userData
+    ? ({ name: userData.payload.name } satisfies UserContext)
+    : undefined
 
   return {
     theme,
+    user,
   }
 }
 
 export default function App({ loaderData }: Route.ComponentProps) {
-  const { theme } = loaderData
+  const { theme, user } = loaderData
   return (
     <html lang='en' className={theme}>
       <head>
@@ -41,11 +49,13 @@ export default function App({ loaderData }: Route.ComponentProps) {
         <Meta />
         <Links />
       </head>
-      <LayoutComponent>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-      </LayoutComponent>
+      <UserProvider user={user}>
+        <LayoutComponent>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+        </LayoutComponent>
+      </UserProvider>
     </html>
   )
 }
