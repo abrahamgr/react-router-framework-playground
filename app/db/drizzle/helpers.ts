@@ -5,18 +5,26 @@ import * as schema from './schema'
 import 'dotenv/config'
 import { DEFAULT } from 'playwright/const'
 
+const isNotCI = !process.env.CI
+
 export async function runResetSeed() {
-  console.log('resetting...')
-  console.time('reset seed')
+  if (isNotCI) {
+    console.log('resetting...')
+    console.time('reset seed')
+  }
   const db = drizzle(process.env.DATABASE_URL!)
   return reset(db, schema).finally(() => {
-    console.timeEnd('reset seed')
+    if (isNotCI) {
+      console.timeEnd('reset seed')
+    }
   })
 }
 
 export async function runSeed() {
-  console.log('seeding...')
-  console.time('seed')
+  if (isNotCI) {
+    console.log('seeding...')
+    console.time('seed')
+  }
   const db = drizzle(process.env.DATABASE_URL!)
   const passwordHashed = hashPassword(DEFAULT.password)
   return seed(db, schema, { seed: 1 })
@@ -43,6 +51,8 @@ export async function runSeed() {
       },
     }))
     .finally(() => {
-      console.timeEnd('seed')
+      if (isNotCI) {
+        console.timeEnd('seed')
+      }
     })
 }
