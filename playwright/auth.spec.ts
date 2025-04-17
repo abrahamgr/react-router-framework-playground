@@ -11,11 +11,16 @@ test.afterAll(async () => {
   await runResetSeed()
 })
 
-test('user should be able to login', async ({ page }) => {
+test('user should be able to login and logout', async ({ page }) => {
   await page.goto(pages.login)
   await expect(page.locator('h2')).toHaveText(/Login/)
   await fillLoginAndSubmit(page)
-  await expect(page).toHaveURL('/')
+  await expect(page).toHaveURL(pages.root)
+  await page.getByTestId('user-menu').click()
+  const logOut = page.getByRole('link', { name: 'Logout' })
+  await expect(logOut).toBeVisible()
+  await logOut.click()
+  await expect(page).toHaveURL(new RegExp(pages.login))
 })
 
 test('user should be able to register and login', async ({ page }) => {

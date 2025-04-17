@@ -33,18 +33,20 @@ export const Menu = () => {
         </NavLink>
         {user ? (
           <div>
-            <div
-              className='mr-5 flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-[10px] border-[1px] border-b-blue-50'
+            <button
+              type='button'
+              className='mr-5 flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-[10px] border-[1px] p-1'
               onClick={handleClick}
+              data-testid='user-menu'
             >
               {userLetter}
-            </div>
+            </button>
             {isOpen ? (
-              <ul className='mt-2 space-y-2 border-gray-300 border-l pl-4'>
-                <li className='block p-2'>
+              <ul className='absolute right-0 mt-2 border-[1px] border-gray-300 border-l bg-white dark:bg-black'>
+                <li className='block border-b-[1px] p-2 pl-4'>
                   <span className='mr-3'>{user.name}</span>
                 </li>
-                <li className='block p-2 hover:text-gray-400 dark:hover:text-gray-800'>
+                <li className='block p-2 pl-4 hover:text-gray-400 dark:hover:text-gray-400'>
                   <NavLink
                     to={`${pages.logout}?url=${location.pathname}`}
                     className=''
