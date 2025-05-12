@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose'
 import { redirect } from 'react-router'
 import { pages } from '~/const/pages'
-import { JWTPayload } from '~/types/claims'
+import type { JWTPayload } from '~/types/claims'
 import { jwtCookie } from './cookie.server'
 
 const jwtSecret = new TextEncoder().encode(process.env.JWT_SECRET)
@@ -18,14 +18,20 @@ export function createJwt(request: Request, claims: JWTPayload) {
     .sign(jwtSecret)
 }
 
-export function verifyJtw(request: Request, jwt: string) {
+export async function verifyJtw(request: Request, jwt: string) {
   try {
     const { url } = request
     const { origin } = new URL(url)
-    return jwtVerify<JWTPayload>(jwt, jwtSecret, {
+    const jwtResult = await jwtVerify<JWTPayload>(jwt, jwtSecret, {
       issuer: origin,
       algorithms: [algorithm],
     })
+    if (!jwtResult.payload) {
+      console.error('JWT verification failed', jwtResult)
+      return undefined
+      // error.code 'ERR_JWT_EXPIRED'
+    }
+    return jwtResult
   } catch (error) {
     console.error('JWT verification failed', error)
     return undefined

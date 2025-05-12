@@ -1,16 +1,17 @@
 import {
   Links,
-  LoaderFunctionArgs,
+  type LoaderFunctionArgs,
   Meta,
-  MetaFunction,
+  type MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
+  data,
 } from 'react-router'
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'
 import type { Route } from './+types/root'
-import { UserContext } from './context/UserContext'
+import type { UserContext } from './context/UserContext'
 import { getAllCookies } from './helpers/cookie.server'
 import { getUserSession } from './helpers/jwt.server'
 import { UserProvider } from './providers/UserProvider'
@@ -25,17 +26,32 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const cookies = request.headers.get('cookie') ?? ''
-  const theme = getAllCookies(cookies)['theme'] ?? 'dark'
+  const headerCookie = request.headers.get('cookie') ?? ''
+  const allCookies = getAllCookies(headerCookie)
+  const theme = allCookies?.theme ?? 'dark'
   const userData = await getUserSession(request)
   const user = userData
     ? ({ name: userData.payload.name } satisfies UserContext)
     : undefined
 
-  return {
-    theme,
-    user,
+  const headers = new Headers()
+  // expire cookie if jwt exists and session is invalid
+  if (allCookies?.jwt && !userData) {
+    headers.append(
+      'Set-Cookie',
+      `jwt=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0${process.env.NODE_ENV === 'development' ? '' : '; Secure'}`
+    )
   }
+
+  return data(
+    {
+      theme,
+      user,
+    },
+    {
+      headers,
+    }
+  )
 }
 
 export default function App({ loaderData }: Route.ComponentProps) {
