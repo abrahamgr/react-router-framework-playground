@@ -32,10 +32,10 @@ jobs:
         with:
           name: Rick & Morty - $VERSION
           path: $BUILD_FILENAME
+          if-no-files-found: ignore
 
       - name: Create release
         id: create_release
-        if: steps.check.outputs.VERSION != ''
         run: |
           curl -L \
           -X POST \
