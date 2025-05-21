@@ -3,6 +3,7 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "build": "react-router build",
     "build:e2e": "npm run build && cp .env ./build/.env || true",
@@ -55,6 +56,5 @@
   },
   "engines": {
     "node": "22.x"
-  },
-  "version": "1.0.0"
+  }
 }

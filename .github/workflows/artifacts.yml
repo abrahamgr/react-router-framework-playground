@@ -1,0 +1,63 @@
+name: Artifacts
+# description: Upload artifacts for release
+on:
+  push:
+    branches: [ main ]
+jobs:
+  check_version:
+    runs-on: ubuntu-latest
+    outputs:
+      version_changed: ${{ steps.check.outputs.version_changed }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Version from package.json
+        id: check
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "Detected version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Check for Version Changes
+        id: check-version
+        run: |
+          PREV_VERSION=$(git tag --sort=-version:refname | head -n 1)
+          echo "Previous version: $PREV_VERSION"
+          if [[ "$VERSION" != "$PREV_VERSION" ]]; then
+            echo "Version changed"
+            echo "version_changed=true" >> $GITHUB_ENV
+          else
+            echo "version_changed=false" >> $GITHUB_ENV
+          fi
+  create-release:
+    needs: check_version
+    if: needs.check_version.outputs.version_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+      
+      - name: Get Version from package.json
+        id: check
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "Detected version: $VERSION"
+          BUILD_FILENAME="build-$VERSION.zip"
+      
+      - name: Compress build
+        run: zip -r ${{ BUILD_FILENAME }} build/
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: ${{ !cancelled() }}
+        with:
+          name: rick-morty-app-$${{ VERSION }}
+          if-no-files-found: error
+          path: ${{ BUILD_FILENAME }}.zip
