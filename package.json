@@ -3,7 +3,7 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "scripts": {
     "build": "react-router build",
     "build:e2e": "npm run build && cp .env ./build/.env || true",
