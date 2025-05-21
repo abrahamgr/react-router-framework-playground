@@ -13,3 +13,6 @@ postgres-data/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# compressed files
+*.tar.gz
