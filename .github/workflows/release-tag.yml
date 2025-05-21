@@ -24,16 +24,12 @@ jobs:
           VERSION=$GITHUB_REF_NAME
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Detected version: $VERSION"
-          echo "BUILD_FILENAME=build-$VERSION.tar.gz" >> $GITHUB_OUTPUT
-      
-      - name: Compress build
-        run:  tar -czf ${{ steps.check.outputs.VERSION }} build/ --verbose
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Rick & Morty - ${{ steps.check.outputs.VERSION }}
-          path: ${{ steps.check.outputs.BUILD_FILENAME }}
+          name: Rick & Morty build - ${{ steps.check.outputs.VERSION }}
+          path: build/
           if-no-files-found: ignore
 
       - name: Create release
