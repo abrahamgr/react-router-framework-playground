@@ -52,12 +52,12 @@ jobs:
           BUILD_FILENAME="build-$VERSION.zip"
       
       - name: Compress build
-        run: zip -r ${{ BUILD_FILENAME }} build/
+        run: zip -r $BUILD_FILENAME build/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         if: ${{ !cancelled() }}
         with:
-          name: rick-morty-app-$${{ VERSION }}
+          name: rick-morty-app-$VERSION
           if-no-files-found: error
-          path: ${{ BUILD_FILENAME }}.zip
+          path: $BUILD_FILENAME
