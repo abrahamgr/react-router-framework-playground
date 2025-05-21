@@ -33,6 +33,23 @@ npm run setup:dockerdb
 
 Now you'll need to pick a host to deploy it to.
 
+### Using docker
+
+Build the image
+
+```bash
+docker build -t rick-morty-app .
+```
+
+Run a container
+
+```bash
+docker run --rm -p 3000:3000 --name rick-morty-app rick-morty-app
+```
+
+Adds `--rm` so the container is automatically removed when it stops
+
+
 ### DIY
 
 If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
