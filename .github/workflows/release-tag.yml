@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
+permissions:
+  contents: write
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -25,7 +27,7 @@ jobs:
           echo "BUILD_FILENAME=build-$VERSION.tar.gz" >> $GITHUB_ENV
       
       - name: Compress build
-        run:  tar -czf $BUILD_FILENAME build/
+        run:  tar -czf $BUILD_FILENAME build/ --verbose
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
