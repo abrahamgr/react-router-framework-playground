@@ -35,6 +35,6 @@ export async function loader({ request }: Route.LoaderArgs) {
   return undefined
 }
 
-export default function SignupPage({ actionData }: Route.ComponentProps) {
-  return <Signup error={actionData?.error} />
+export default function SignupPage() {
+  return <Signup />
 }

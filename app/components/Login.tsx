@@ -4,13 +4,9 @@ import { Button } from './atoms/Button'
 import { FormField } from './atoms/FormField'
 import { Input } from './atoms/Input'
 
-export interface LoginProps {
-  error?: string
-}
-
-export function Login({ error }: LoginProps) {
+export function Login() {
   const fetcher = useFetcher()
-  // const error = fetcher.data.error
+  const error = fetcher.data?.error
 
   return (
     <fetcher.Form method='POST' className='flex w-[500px] flex-col p-5'>

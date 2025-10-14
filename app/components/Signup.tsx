@@ -1,17 +1,13 @@
 import { Link, useFetcher } from 'react-router'
 import { pages } from '~/const/pages'
-import type { Route } from '../routes/+types/signup'
 import { Button } from './atoms/Button'
 import { FormField } from './atoms/FormField'
 import { Input } from './atoms/Input'
 
-export interface SignupProps {
-  error?: string
-}
-
-export function Signup({ error }: SignupProps) {
-  const fetcher = useFetcher<Route.ActionArgs>()
+export function Signup() {
+  const fetcher = useFetcher()
   const isSubmitting = fetcher.state !== 'idle'
+  const error = fetcher.data?.error
 
   return (
     <fetcher.Form
