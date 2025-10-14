@@ -11,7 +11,8 @@
       "build/**",
       "postgres-data/**",
       "playwright-report/**",
-      "test-results/**"
+      "test-results/**",
+      ".react-router/**"
     ]
   },
   "formatter": {

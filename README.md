@@ -28,14 +28,14 @@ npm start
 Setup postgres db using docker:
 
 ```sh
-npm run setup:dockerdb
+npm run docker:up
 ```
 
 Now you'll need to pick a host to deploy it to.
 
 ### Using docker
 
-Build the image
+Build and rune the image
 
 ```bash
 docker build -t rick-morty-app .
