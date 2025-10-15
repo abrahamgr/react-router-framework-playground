@@ -1,4 +1,4 @@
-import { type Page, expect, test } from '@playwright/test'
+import { expect, type Page, test } from '@playwright/test'
 import { pages } from '~/const/pages'
 import { runResetSeed, runSeed } from '~/db/drizzle/helpers'
 import { fillLoginAndSubmit } from './common'

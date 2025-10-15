@@ -1,7 +1,7 @@
 import {
   type ActionFunctionArgs,
-  type LoaderFunction,
   data,
+  type LoaderFunction,
   redirect,
 } from 'react-router'
 import { login } from '~/api-schemas/schemas'

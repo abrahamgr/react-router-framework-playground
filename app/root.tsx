@@ -1,4 +1,5 @@
 import {
+  data,
   Links,
   type LoaderFunctionArgs,
   Meta,
@@ -6,7 +7,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  data,
 } from 'react-router'
 import './tailwind.css'
 import { LayoutComponent } from '~/components/LayoutComponent'

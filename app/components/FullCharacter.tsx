@@ -2,8 +2,8 @@ import { type FC } from 'react'
 import { CharacterProps } from '~/components/CharacterItem'
 import { EpisodeList } from '~/components/EpisodeList'
 import { useFavorite } from '~/hooks/useFavorite'
-import starFilledIcon from '~/icons/star-filled.svg'
 import starIcon from '~/icons/star.svg'
+import starFilledIcon from '~/icons/star-filled.svg'
 import { Episode } from '~/types/rick-morty'
 
 interface FullCharacterProps extends CharacterProps {

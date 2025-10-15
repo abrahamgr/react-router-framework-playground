@@ -1,4 +1,4 @@
-import { Page, expect, test } from '@playwright/test'
+import { expect, Page, test } from '@playwright/test'
 
 test('should change theme', async ({ page }) => {
   await page.goto('/')

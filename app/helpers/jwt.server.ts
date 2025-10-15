@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify } from 'jose'
+import { jwtVerify, SignJWT } from 'jose'
 import { redirect } from 'react-router'
 import { pages } from '~/const/pages'
 import type { JWTPayload } from '~/types/claims'

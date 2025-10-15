@@ -1,5 +1,4 @@
-import { type LoaderFunctionArgs } from 'react-router'
-import { useSearchParams } from 'react-router'
+import { type LoaderFunctionArgs, useSearchParams } from 'react-router'
 import { CharacterList } from '~/components/CharacterList'
 import { Pagination } from '~/components/Pagination'
 import { getUserFavorites } from '~/db/drizzle/favorites'
